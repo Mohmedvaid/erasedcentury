@@ -1238,6 +1238,96 @@
       margin-bottom: 1rem
     }
 
+    /* ARCHIVE SEARCH */
+    .archive-search {
+      margin-bottom: 2rem;
+      position: relative
+    }
+
+    .archive-search-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      padding: .85rem 1.25rem .85rem 3rem;
+      outline: none;
+      transition: border-color .25s, box-shadow .25s
+    }
+
+    .archive-search-input::placeholder {
+      color: var(--text-muted)
+    }
+
+    .archive-search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim)
+    }
+
+    .archive-search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--text-muted);
+      pointer-events: none
+    }
+
+    .archive-search-clear {
+      position: absolute;
+      right: .75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: .9rem;
+      padding: .25rem;
+      line-height: 1;
+      display: none;
+      transition: color .2s
+    }
+
+    .archive-search-clear:hover {
+      color: var(--text-primary)
+    }
+
+    .archive-search-clear.show {
+      display: block
+    }
+
+    .archive-no-results {
+      text-align: center;
+      padding: 3rem 1rem;
+      display: none
+    }
+
+    .archive-no-results.show {
+      display: block
+    }
+
+    .archive-no-results p {
+      font-family: 'Space Mono', monospace;
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-muted)
+    }
+
+    .archive-no-results .no-results-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .85rem;
+      font-weight: 300;
+      text-transform: none;
+      letter-spacing: 0;
+      margin-top: .5rem;
+      opacity: .6
+    }
+
     /* ABOUT */
     .about {
       padding: 8rem 0;
@@ -1774,6 +1864,15 @@
         <a href="#" target="_blank" class="view-all" id="viewAllLink">View all on YouTube →</a>
       </div>
       <div class="feat-hero sr" id="featHero"></div>
+      <div class="archive-search sr">
+        <svg class="archive-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="archive-search-input" id="archiveSearch" placeholder="Search investigations..." autocomplete="off">
+        <button class="archive-search-clear" id="archiveSearchClear" aria-label="Clear search">&times;</button>
+      </div>
+      <div class="archive-no-results" id="archiveNoResults">
+        <p>No investigations found</p>
+        <p class="no-results-sub">Try a different search term</p>
+      </div>
       <div class="vid-grid" id="vidGrid"></div>
     </div>
   </section>
@@ -1990,6 +2089,41 @@
         c.addEventListener('click', () => openModal(parseInt(c.dataset.id)))
       );
     }
+
+    // ---- ARCHIVE SEARCH ----
+    (function () {
+      const searchInput = document.getElementById('archiveSearch');
+      const clearBtn = document.getElementById('archiveSearchClear');
+      const noResults = document.getElementById('archiveNoResults');
+
+      searchInput.addEventListener('input', function () {
+        const q = this.value.trim().toLowerCase();
+        clearBtn.classList.toggle('show', q.length > 0);
+        const grid = document.getElementById('vidGrid');
+        const cards = grid.querySelectorAll('.vid-card');
+        let visible = 0;
+
+        cards.forEach(card => {
+          const id = parseInt(card.dataset.id);
+          const v = VIDEOS.find(x => x.id === id);
+          if (!v) return;
+          const match = !q ||
+            v.title.toLowerCase().includes(q) ||
+            v.description.toLowerCase().includes(q) ||
+            v.date.toLowerCase().includes(q);
+          card.style.display = match ? '' : 'none';
+          if (match) visible++;
+        });
+
+        noResults.classList.toggle('show', visible === 0 && q.length > 0);
+      });
+
+      clearBtn.addEventListener('click', function () {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input'));
+        searchInput.focus();
+      });
+    })();
 
     // ---- RENDER ABOUT ----
     function renderAbout() {
