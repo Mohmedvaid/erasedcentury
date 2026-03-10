@@ -18,8 +18,16 @@
     href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=Space+Mono:wght@400;700&display=swap"
     rel="stylesheet">
   <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
+  <script>
+    // Apply saved theme immediately to prevent flash
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <style>
-    :root {
+    :root,
+    [data-theme="dark"] {
       --bg: #0C0B09;
       --bg-elevated: #141310;
       --bg-card: #1A1815;
@@ -34,6 +42,33 @@
       --accent-bright: #D4B88A;
       --accent-dim: rgba(196, 163, 112, 0.1);
       --white: #FFFCF5;
+      --nav-scrolled-bg: rgba(12, 11, 9, .88);
+      --modal-bg: rgba(12, 11, 9, .92);
+      --play-overlay-bg: rgba(12, 11, 9, .3);
+      --dur-bg: rgba(12, 11, 9, .85);
+      --shadow-card: rgba(0, 0, 0, .3);
+    }
+
+    [data-theme="light"] {
+      --bg: #F5F1EB;
+      --bg-elevated: #EDE8E0;
+      --bg-card: #FFFFFF;
+      --bg-hover: #E8E2D8;
+      --surface: #E0DAD0;
+      --border: rgba(139, 113, 68, 0.12);
+      --border-hover: rgba(139, 113, 68, 0.25);
+      --text-primary: #1A1815;
+      --text-secondary: #5C5346;
+      --text-muted: #8A8070;
+      --accent: #8B6F3A;
+      --accent-bright: #7A6132;
+      --accent-dim: rgba(139, 111, 58, 0.08);
+      --white: #1A1815;
+      --nav-scrolled-bg: rgba(245, 241, 235, .92);
+      --modal-bg: rgba(245, 241, 235, .95);
+      --play-overlay-bg: rgba(245, 241, 235, .4);
+      --dur-bg: rgba(26, 24, 21, .8);
+      --shadow-card: rgba(0, 0, 0, .08);
     }
 
     *,
@@ -71,6 +106,26 @@
       pointer-events: none;
       z-index: 9999;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    }
+
+    [data-theme="light"] body::after {
+      opacity: .015
+    }
+
+    [data-theme="light"] .hero-bg .orb {
+      opacity: .06
+    }
+
+    [data-theme="light"] .vid-card {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .04)
+    }
+
+    [data-theme="light"] .feat-hero {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .06)
+    }
+
+    [data-theme="light"] .nav-logo-img {
+      filter: brightness(0.3)
     }
 
     .sr {
@@ -126,7 +181,7 @@
     }
 
     .nav.scrolled {
-      background: rgba(12, 11, 9, .88);
+      background: var(--nav-scrolled-bg);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px)
     }
@@ -218,6 +273,56 @@
       background: var(--accent-bright);
       transform: translateY(-1px);
       box-shadow: 0 4px 20px rgba(196, 163, 112, .25)
+    }
+
+    /* THEME TOGGLE */
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: color .25s, border-color .25s, background .25s;
+      flex-shrink: 0
+    }
+
+    .theme-toggle:hover {
+      color: var(--accent);
+      border-color: var(--border-hover);
+      background: var(--accent-dim)
+    }
+
+    .theme-toggle svg {
+      width: 16px;
+      height: 16px
+    }
+
+    .theme-toggle .icon-moon,
+    [data-theme="light"] .theme-toggle .icon-sun {
+      display: none
+    }
+
+    [data-theme="light"] .theme-toggle .icon-moon {
+      display: block
+    }
+
+    [data-theme="light"] .theme-toggle .icon-sun {
+      display: none
+    }
+
+    :root .theme-toggle .icon-sun,
+    [data-theme="dark"] .theme-toggle .icon-sun {
+      display: block
+    }
+
+    :root .theme-toggle .icon-moon,
+    [data-theme="dark"] .theme-toggle .icon-moon {
+      display: none
     }
 
     .nav-burger {
@@ -658,7 +763,7 @@
     .vid-card:hover {
       border-color: var(--border-hover);
       transform: translateY(-4px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, .3)
+      box-shadow: 0 20px 60px var(--shadow-card)
     }
 
     .vid-card:hover .vid-card-img img {
@@ -685,9 +790,9 @@
       right: .75rem;
       font-family: 'Space Mono', monospace;
       font-size: .6rem;
-      background: rgba(12, 11, 9, .85);
+      background: var(--dur-bg);
       backdrop-filter: blur(4px);
-      color: var(--text-primary);
+      color: #F5F0E8;
       padding: .2rem .5rem;
       letter-spacing: .04em
     }
@@ -698,7 +803,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(12, 11, 9, .3);
+      background: var(--play-overlay-bg);
       opacity: 0;
       transition: opacity .3s
     }
@@ -719,11 +824,20 @@
       background: rgba(255, 252, 245, .08)
     }
 
+    [data-theme="light"] .play-circle {
+      border-color: rgba(26, 24, 21, .5);
+      background: rgba(26, 24, 21, .1)
+    }
+
     .play-circle svg {
       width: 18px;
       height: 18px;
       fill: var(--white);
       margin-left: 2px
+    }
+
+    [data-theme="light"] .play-circle svg {
+      fill: #1A1815
     }
 
     .vid-card-body {
@@ -784,7 +898,7 @@
       position: fixed;
       inset: 0;
       z-index: 200;
-      background: rgba(12, 11, 9, .92);
+      background: var(--modal-bg);
       backdrop-filter: blur(8px);
       overflow-y: auto;
       opacity: 0;
@@ -1338,6 +1452,11 @@
         display: flex
       }
 
+      .nav-links .theme-toggle {
+        order: -1;
+        margin-bottom: 1rem
+      }
+
       .nav-burger {
         display: block;
         z-index: 9999
@@ -1407,6 +1526,24 @@
         <a href="#archive" class="nav-link">Archive</a>
         <a href="#about" class="nav-link">About</a>
         <a href="#" class="nav-link" id="navContact">Contact</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </button>
         <a href="#" target="_blank" rel="noopener" class="nav-cta" id="navSubscribe">Subscribe</a>
       </div>
     </div>
@@ -1674,6 +1811,33 @@
     document.getElementById('burger').addEventListener('click', function () { this.classList.toggle('open'); document.getElementById('navLinks').classList.toggle('open'); });
     document.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => { document.getElementById('burger').classList.remove('open'); document.getElementById('navLinks').classList.remove('open'); }));
 
+    // ---- THEME TOGGLE ----
+    (function () {
+      const saved = localStorage.getItem('theme');
+      if (saved) document.documentElement.setAttribute('data-theme', saved);
+
+      document.getElementById('themeToggle').addEventListener('click', function () {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        reRenderRecaptcha(next);
+      });
+
+      function reRenderRecaptcha(theme) {
+        if (typeof grecaptcha === 'undefined') return;
+        var rcTheme = theme === 'light' ? 'light' : 'dark';
+        // Reset and re-render inline widget
+        var inlineEl = document.getElementById('recaptchaInline');
+        inlineEl.innerHTML = '';
+        inlineWidgetId = grecaptcha.render('recaptchaInline', { sitekey: RC_KEY, theme: rcTheme });
+        // Reset and re-render banner widget
+        var bannerEl = document.getElementById('recaptchaBanner');
+        bannerEl.innerHTML = '';
+        bannerWidgetId = grecaptcha.render('recaptchaBanner', { sitekey: RC_KEY, theme: rcTheme, size: 'compact' });
+      }
+    })();
+
     // ---- SCROLL REVEAL ----
     function initObs() {
       const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } }); }, { threshold: .08, rootMargin: '0px 0px -40px 0px' });
@@ -1689,8 +1853,9 @@
     // Explicit reCAPTCHA rendering (called by API onload callback)
     let bannerWidgetId, inlineWidgetId;
     function onRecaptchaLoad() {
-      inlineWidgetId = grecaptcha.render('recaptchaInline', { sitekey: RC_KEY, theme: 'dark' });
-      bannerWidgetId = grecaptcha.render('recaptchaBanner', { sitekey: RC_KEY, theme: 'dark', size: 'compact' });
+      var rcTheme = (document.documentElement.getAttribute('data-theme') || 'dark') === 'light' ? 'light' : 'dark';
+      inlineWidgetId = grecaptcha.render('recaptchaInline', { sitekey: RC_KEY, theme: rcTheme });
+      bannerWidgetId = grecaptcha.render('recaptchaBanner', { sitekey: RC_KEY, theme: rcTheme, size: 'compact' });
     }
 
     const banner = document.getElementById('emailBanner');
