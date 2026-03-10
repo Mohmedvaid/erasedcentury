@@ -1003,7 +1003,7 @@
 
     .modal-sidebar-label {
       font-family: 'Space Mono', monospace;
-      font-size: .6rem;
+      font-size: .75rem;
       letter-spacing: .2em;
       text-transform: uppercase;
       color: var(--accent);
@@ -1021,14 +1021,14 @@
 
     .src-num {
       font-family: 'Space Mono', monospace;
-      font-size: .6rem;
+      font-size: .7rem;
       color: var(--text-muted);
       min-width: 1.5rem;
       padding-top: .15rem
     }
 
     .src-text {
-      font-size: .85rem;
+      font-size: .95rem;
       font-weight: 300;
       color: var(--text-secondary);
       line-height: 1.5
@@ -1066,7 +1066,7 @@
 
     .src-category-label {
       font-family: 'Space Mono', monospace;
-      font-size: .6rem;
+      font-size: .75rem;
       letter-spacing: .15em;
       text-transform: uppercase;
       color: var(--accent)
@@ -1074,7 +1074,7 @@
 
     .src-category-count {
       font-family: 'Space Mono', monospace;
-      font-size: .5rem;
+      font-size: .65rem;
       color: var(--text-muted);
       display: flex;
       align-items: center;
@@ -1082,7 +1082,7 @@
     }
 
     .src-category-toggle {
-      font-size: .65rem;
+      font-size: .75rem;
       color: var(--text-muted);
       transition: transform .3s ease
     }
@@ -1115,57 +1115,58 @@
 
     .src-badge {
       font-family: 'Space Mono', monospace;
-      font-size: .4rem;
+      font-size: .55rem;
       letter-spacing: .1em;
       text-transform: uppercase;
-      padding: .15rem .35rem;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      min-width: 2.5rem;
+      padding: .25rem .5rem;
+      border: none;
+      color: #fff;
+      min-width: 2.8rem;
       text-align: center;
       margin-top: .25rem;
       flex-shrink: 0;
-      line-height: 1.3
+      line-height: 1.3;
+      border-radius: 3px
     }
 
     .src-badge.book {
-      border-color: rgba(196, 163, 112, .25);
-      color: var(--accent)
+      background: #a08050;
+      color: #fff
     }
 
     .src-badge.paper {
-      border-color: rgba(126, 203, 139, .25);
-      color: #7ecb8b
+      background: #4a9e5c;
+      color: #fff
     }
 
     .src-badge.news {
-      border-color: rgba(139, 163, 203, .25);
-      color: #8ba3cb
+      background: #5b7baf;
+      color: #fff
     }
 
     .src-badge.archive {
-      border-color: rgba(203, 180, 126, .25);
-      color: #cbb47e
+      background: #a0884a;
+      color: #fff
     }
 
     .src-badge.gov {
-      border-color: rgba(203, 126, 126, .25);
-      color: #cb7e7e
+      background: #b05555;
+      color: #fff
     }
 
     .src-badge.web {
-      border-color: rgba(163, 139, 203, .25);
-      color: #a38bcb
+      background: #7a5eb5;
+      color: #fff
     }
 
     .src-badge.video {
-      border-color: rgba(203, 139, 163, .25);
-      color: #cb8ba3
+      background: #b05a7a;
+      color: #fff
     }
 
     .src-badge.doc {
-      border-color: rgba(139, 203, 180, .25);
-      color: #8bcbb4
+      background: #4a9e88;
+      color: #fff
     }
 
     .src-item-content {
@@ -1174,7 +1175,7 @@
     }
 
     .src-item-title {
-      font-size: .82rem;
+      font-size: .95rem;
       font-weight: 400;
       color: var(--text-secondary);
       line-height: 1.5
@@ -1191,7 +1192,7 @@
     }
 
     .src-item-note {
-      font-size: .72rem;
+      font-size: .82rem;
       font-weight: 300;
       color: var(--text-muted);
       line-height: 1.6;
@@ -1232,7 +1233,7 @@
 
     .src-total {
       font-family: 'Space Mono', monospace;
-      font-size: .5rem;
+      font-size: .7rem;
       color: var(--text-muted);
       letter-spacing: .08em;
       margin-bottom: 1rem
@@ -1865,8 +1866,13 @@
       </div>
       <div class="feat-hero sr" id="featHero"></div>
       <div class="archive-search sr">
-        <svg class="archive-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" class="archive-search-input" id="archiveSearch" placeholder="Search investigations..." autocomplete="off">
+        <svg class="archive-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input type="text" class="archive-search-input" id="archiveSearch" placeholder="Search investigations..."
+          autocomplete="off">
         <button class="archive-search-clear" id="archiveSearchClear" aria-label="Clear search">&times;</button>
       </div>
       <div class="archive-no-results" id="archiveNoResults">
