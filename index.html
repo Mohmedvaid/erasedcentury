@@ -11,6 +11,7 @@
   <meta property="og:description" content="Documentary research into the stories they tried to erase.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://erasedcentury.com">
+  <link rel="icon" type="image/png" href="./assets/images/logo-min-nbg.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -1330,7 +1331,7 @@
         align-items: center;
         justify-content: center;
         gap: 2rem;
-        z-index: 99
+        z-index: 9998
       }
 
       .nav-links.open {
@@ -1339,11 +1340,16 @@
 
       .nav-burger {
         display: block;
-        z-index: 101
+        z-index: 9999
       }
 
       .nav-link {
         font-size: 1rem
+      }
+
+      .nav-cta {
+        font-size: .85rem;
+        padding: .65rem 1.8rem
       }
 
       .vid-grid {
@@ -1366,11 +1372,23 @@
 
       .banner-form {
         width: 100%;
-        justify-content: center
+        justify-content: center;
+        flex-direction: column;
+        align-items: center
       }
 
       .banner-input {
         width: 100%
+      }
+
+      .banner-recaptcha {
+        transform: scale(0.85);
+        transform-origin: center
+      }
+
+      .email-inline-recaptcha {
+        transform: scale(0.9);
+        transform-origin: center
       }
     }
   </style>
