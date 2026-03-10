@@ -16,7 +16,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=Space+Mono:wght@400;700&display=swap"
     rel="stylesheet">
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
   <style>
     :root {
       --bg: #0C0B09;
@@ -1455,7 +1455,7 @@
         <h2>Get the research behind each video</h2>
         <p>Sources, extended research, and new investigations — delivered to your inbox. No spam, no fluff.</p>
         <div class="email-inline-recaptcha">
-          <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY" data-theme="dark" id="recaptchaInline"></div>
+          <div class="g-recaptcha" data-theme="dark" id="recaptchaInline"></div>
         </div>
         <div class="email-inline-form">
           <input type="email" class="email-inline-input" id="inlineEmail" placeholder="Enter your email" required>
@@ -1483,8 +1483,7 @@
       </div>
       <div class="banner-form">
         <div class="banner-recaptcha">
-          <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY" data-theme="dark" data-size="compact"
-            id="recaptchaBanner"></div>
+          <div class="g-recaptcha" data-theme="dark" data-size="compact" id="recaptchaBanner"></div>
         </div>
         <input type="email" class="banner-input" id="bannerEmail" placeholder="Your email">
         <button class="banner-submit" id="bannerSubmit" onclick="submitBanner()">Subscribe</button>
@@ -1664,9 +1663,17 @@
     }
 
     // ==========================================
-    // EMAIL SIGNUP — BEEHIIV + reCAPTCHA
+    // EMAIL SIGNUP — BEEHIIV + reCAPTCHA (from data.js)
     // ==========================================
-    const BEEHIIV_MAGIC = 'https://magic.beehiiv.com/v1/1ff062b4-35b2-4de9-930d-82c8a6939bbe';
+    const BEEHIIV_MAGIC = SITE_DATA.beehiiv_magic_link;
+    const RC_KEY = SITE_DATA.recaptcha_site_key;
+
+    // Explicit reCAPTCHA rendering (called by API onload callback)
+    let bannerWidgetId, inlineWidgetId;
+    function onRecaptchaLoad() {
+      inlineWidgetId = grecaptcha.render('recaptchaInline', { sitekey: RC_KEY, theme: 'dark' });
+      bannerWidgetId = grecaptcha.render('recaptchaBanner', { sitekey: RC_KEY, theme: 'dark', size: 'compact' });
+    }
 
     const banner = document.getElementById('emailBanner');
     const bannerDismissed = sessionStorage.getItem('bannerClosed');
@@ -1719,11 +1726,6 @@
         grecaptcha.reset(widgetId);
       }
     }
-
-    let bannerWidgetId = 0, inlineWidgetId = 1;
-    const rcCheck = setInterval(() => {
-      if (typeof grecaptcha !== 'undefined' && grecaptcha.getResponse) { clearInterval(rcCheck); }
-    }, 500);
 
     function submitBanner() { submitToBeehiiv(document.getElementById('bannerEmail').value.trim(), 'bannerMsg', document.getElementById('bannerSubmit'), bannerWidgetId); }
     function submitInline() { submitToBeehiiv(document.getElementById('inlineEmail').value.trim(), 'inlineMsg', document.getElementById('inlineSubmit'), inlineWidgetId); }
