@@ -15,7 +15,7 @@ const SITE_DATA = {
     "description": "Investigating the forgotten, suppressed, and deliberately hidden chapters of human history — built on evidence, sources, and impossible archival photography.",
     "youtube_url": "https://www.youtube.com/channel/UCbbeQCNpFiblWYm3tb4PNZA",
     "subscribe_url": "https://www.youtube.com/channel/UCbbeQCNpFiblWYm3tb4PNZA?sub_confirmation=1",
-    "contact_email": "contact@erasedcentury.com",
+    "contact_email": "erasedcentury@gmail.com",
     "subscribers": "39.4K",
     "documentaries": 41,
     "total_views": "2.3M+",
