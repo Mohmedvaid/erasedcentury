@@ -963,12 +963,6 @@
       border: none
     }
 
-    .modal-info {
-      display: grid;
-      grid-template-columns: 1fr 320px;
-      gap: 3rem
-    }
-
     .modal-h {
       font-family: 'Instrument Serif', serif;
       font-size: clamp(1.5rem, 3vw, 2.2rem);
@@ -1001,7 +995,10 @@
       font-size: 1rem;
       font-weight: 300;
       line-height: 1.8;
-      color: var(--text-secondary)
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border)
     }
 
     .modal-sidebar-label {
@@ -1045,6 +1042,200 @@
 
     .src-text a:hover {
       opacity: .7
+    }
+
+    /* Sources — rich expandable */
+    .src-category {
+      margin-bottom: 1rem
+    }
+
+    .src-category-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: .65rem 0;
+      border-bottom: 1px solid var(--border);
+      user-select: none;
+      transition: color .25s
+    }
+
+    .src-category-head:hover {
+      color: var(--accent)
+    }
+
+    .src-category-label {
+      font-family: 'Space Mono', monospace;
+      font-size: .6rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent)
+    }
+
+    .src-category-count {
+      font-family: 'Space Mono', monospace;
+      font-size: .5rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: .5rem
+    }
+
+    .src-category-toggle {
+      font-size: .65rem;
+      color: var(--text-muted);
+      transition: transform .3s ease
+    }
+
+    .src-category.open .src-category-toggle {
+      transform: rotate(180deg)
+    }
+
+    .src-category-items {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s cubic-bezier(.16, 1, .3, 1)
+    }
+
+    .src-category.open .src-category-items {
+      max-height: 3000px
+    }
+
+    .src-item-rich {
+      padding: .65rem 0;
+      border-bottom: 1px solid rgba(196, 163, 112, .04);
+      display: flex;
+      gap: .65rem;
+      align-items: flex-start
+    }
+
+    .src-item-rich:last-child {
+      border-bottom: none
+    }
+
+    .src-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: .4rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .15rem .35rem;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      min-width: 2.5rem;
+      text-align: center;
+      margin-top: .25rem;
+      flex-shrink: 0;
+      line-height: 1.3
+    }
+
+    .src-badge.book {
+      border-color: rgba(196, 163, 112, .25);
+      color: var(--accent)
+    }
+
+    .src-badge.paper {
+      border-color: rgba(126, 203, 139, .25);
+      color: #7ecb8b
+    }
+
+    .src-badge.news {
+      border-color: rgba(139, 163, 203, .25);
+      color: #8ba3cb
+    }
+
+    .src-badge.archive {
+      border-color: rgba(203, 180, 126, .25);
+      color: #cbb47e
+    }
+
+    .src-badge.gov {
+      border-color: rgba(203, 126, 126, .25);
+      color: #cb7e7e
+    }
+
+    .src-badge.web {
+      border-color: rgba(163, 139, 203, .25);
+      color: #a38bcb
+    }
+
+    .src-badge.video {
+      border-color: rgba(203, 139, 163, .25);
+      color: #cb8ba3
+    }
+
+    .src-badge.doc {
+      border-color: rgba(139, 203, 180, .25);
+      color: #8bcbb4
+    }
+
+    .src-item-content {
+      flex: 1;
+      min-width: 0
+    }
+
+    .src-item-title {
+      font-size: .82rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.5
+    }
+
+    .src-item-title a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity .2s
+    }
+
+    .src-item-title a:hover {
+      opacity: .7
+    }
+
+    .src-item-note {
+      font-size: .72rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-top: .3rem;
+      font-style: italic
+    }
+
+    .src-coming-soon {
+      text-align: center;
+      padding: 2.5rem 1rem
+    }
+
+    .src-coming-soon-icon {
+      font-size: 1.2rem;
+      margin-bottom: .75rem;
+      opacity: .3;
+      color: var(--accent)
+    }
+
+    .src-coming-soon p {
+      font-family: 'Space Mono', monospace;
+      font-size: .6rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--text-muted)
+    }
+
+    .src-coming-soon .src-cs-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .8rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 0;
+      text-transform: none;
+      margin-top: .5rem;
+      opacity: .6
+    }
+
+    .src-total {
+      font-family: 'Space Mono', monospace;
+      font-size: .5rem;
+      color: var(--text-muted);
+      letter-spacing: .08em;
+      margin-bottom: 1rem
     }
 
     /* ABOUT */
@@ -1419,10 +1610,6 @@
         grid-template-columns: repeat(2, 1fr)
       }
 
-      .modal-info {
-        grid-template-columns: 1fr
-      }
-
       .feat-hero {
         grid-template-columns: 1fr
       }
@@ -1652,16 +1839,14 @@
     <div class="modal-wrap">
       <div class="modal-top"><button class="modal-back" id="modalBack">← Back to archive</button></div>
       <div class="modal-player" id="modalPlayer"></div>
-      <div class="modal-info">
-        <div class="modal-main">
-          <h2 class="modal-h" id="modalH"></h2>
-          <div class="modal-meta" id="modalMeta"></div>
-          <div class="modal-desc" id="modalDesc"></div>
-        </div>
-        <aside class="modal-sidebar">
-          <div class="modal-sidebar-label">Sources & References</div>
-          <div id="modalSources"></div>
-        </aside>
+      <div class="modal-info-main">
+        <h2 class="modal-h" id="modalH"></h2>
+        <div class="modal-meta" id="modalMeta"></div>
+        <div class="modal-desc" id="modalDesc"></div>
+      </div>
+      <div class="modal-sources-section">
+        <div class="modal-sidebar-label">Sources & References</div>
+        <div id="modalSources"></div>
       </div>
     </div>
   </div>
@@ -1720,13 +1905,56 @@
       `;
     }
 
+    // ---- SOURCE HELPERS ----
+    function countSources(v) {
+      if (!v.sources || !v.sources.length) return 0;
+      if (v.sources[0] && v.sources[0].category) {
+        return v.sources.reduce((sum, cat) => sum + (cat.items ? cat.items.length : 0), 0);
+      }
+      return v.sources.length;
+    }
+
+    function renderSources(v) {
+      if (!v.sources || !v.sources.length) {
+        return `<div class="src-coming-soon">
+          <div class="src-coming-soon-icon">◇</div>
+          <p>Sources coming soon</p>
+          <p class="src-cs-sub">Detailed references and research notes for this investigation are being compiled.</p>
+        </div>`;
+      }
+      if (v.sources[0] && v.sources[0].category) {
+        const total = countSources(v);
+        return `<div class="src-total">${total} sources across ${v.sources.length} categories</div>` +
+          v.sources.map((cat, ci) => `
+            <div class="src-category${ci === 0 ? ' open' : ''}" data-cat="${ci}">
+              <div class="src-category-head" onclick="this.parentElement.classList.toggle('open')">
+                <span class="src-category-label">${cat.category}</span>
+                <span class="src-category-count">${cat.items.length} sources <span class="src-category-toggle">▼</span></span>
+              </div>
+              <div class="src-category-items">
+                ${cat.items.map(s => `
+                  <div class="src-item-rich">
+                    ${s.type ? `<span class="src-badge ${s.type}">${s.type}</span>` : ''}
+                    <div class="src-item-content">
+                      <div class="src-item-title">${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${s.text}</a>` : s.text}</div>
+                      ${s.note ? `<div class="src-item-note">${s.note}</div>` : ''}
+                    </div>
+                  </div>`).join('')}
+              </div>
+            </div>`).join('');
+      }
+      return v.sources.map((s, i) =>
+        `<div class="src-item"><span class="src-num">${String(i + 1).padStart(2, '0')}</span><span class="src-text">${s.url ? `<a href="${s.url}" target="_blank">${s.text}</a>` : s.text}</span></div>`
+      ).join('');
+    }
+
     // ---- RENDER ARCHIVE ----
     function renderArchive() {
       if (!VIDEOS.length) return;
 
-      // Featured hero card (first video)
       const v = VIDEOS[0];
       const fh = document.getElementById('featHero');
+      const srcCount = countSources(v);
       fh.innerHTML = `
         <div class="feat-hero-img">
           <img src="${thumb(v)}" alt="${v.title}" loading="lazy" onerror="this.style.display='none'">
@@ -1736,13 +1964,14 @@
           <div class="feat-hero-meta">${v.date} <span class="dot"></span> ${v.views} views <span class="dot"></span> ${v.duration}</div>
           <h3 class="feat-hero-title">${v.title}</h3>
           <p class="feat-hero-desc">${v.description}</p>
-          <a href="#" class="feat-hero-link" onclick="event.preventDefault();openModal(${v.id})">Watch & view sources →</a>
+          <a href="#" class="feat-hero-link" onclick="event.preventDefault();openModal(${v.id})">Watch & view ${srcCount ? srcCount + ' sources' : 'details'} →</a>
         </div>`;
       fh.onclick = () => openModal(v.id);
 
-      // Grid (rest of videos)
       const grid = document.getElementById('vidGrid');
-      grid.innerHTML = VIDEOS.slice(1).map((v, i) => `
+      grid.innerHTML = VIDEOS.slice(1).map((v, i) => {
+        const sc = countSources(v);
+        return `
         <article class="vid-card sr sr-d${i + 1}" data-id="${v.id}">
           <div class="vid-card-img">
             <img src="${thumb(v)}" alt="${v.title}" loading="lazy" onerror="this.style.display='none'">
@@ -1752,9 +1981,10 @@
           <div class="vid-card-body">
             <div class="vid-card-meta">${v.date} <span class="dot"></span> ${v.views} views</div>
             <h3 class="vid-card-title">${v.title}</h3>
-            <span class="vid-card-sources">${v.sources.length} sources cited</span>
+            <span class="vid-card-sources">${sc ? sc + ' sources cited' : 'Sources coming soon'}</span>
           </div>
-        </article>`).join('');
+        </article>`;
+      }).join('');
 
       grid.querySelectorAll('.vid-card').forEach(c =>
         c.addEventListener('click', () => openModal(parseInt(c.dataset.id)))
@@ -1789,9 +2019,7 @@
       document.getElementById('modalH').textContent = v.title;
       document.getElementById('modalMeta').innerHTML = `${v.date} <span class="dot"></span> ${v.views} views <span class="dot"></span> ${v.duration}`;
       document.getElementById('modalDesc').textContent = v.description;
-      document.getElementById('modalSources').innerHTML = v.sources.map((s, i) =>
-        `<div class="src-item"><span class="src-num">${String(i + 1).padStart(2, '0')}</span><span class="src-text">${s.url ? `<a href="${s.url}" target="_blank">${s.text}</a>` : s.text}</span></div>`
-      ).join('');
+      document.getElementById('modalSources').innerHTML = renderSources(v);
       const m = document.getElementById('modal');
       m.classList.add('open'); requestAnimationFrame(() => m.classList.add('visible'));
       document.body.style.overflow = 'hidden';
