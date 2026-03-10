@@ -58,6 +58,7 @@ const SITE_DATA = {
     {
       id: 1,
       youtube_id: "-EXcGaC6J90",
+      slug: "the-frequency-they-erased-from-every-violin",
       title:
         "The Frequency They Erased From Every Violin — And Why Music Hasn't Sounded Right Since 1939",
       date: "Mar 10, 2026",
@@ -123,6 +124,7 @@ const SITE_DATA = {
     {
       id: 2,
       youtube_id: "XTngt-jnoN8",
+      slug: "in-536-ad-the-world-went-dark-for-18-months",
       title:
         "In 536 AD, The World Went Dark for 18 Months — They Buried It From Every History Book",
       date: "Mar 9, 2026",
@@ -194,6 +196,7 @@ const SITE_DATA = {
     {
       id: 3,
       youtube_id: "-hshKJl1BTM",
+      slug: "why-43-million-americans-suddenly-had-to-prove-they-were-born",
       title: "Why 43 Million Americans Suddenly Had to Prove They Were Born",
       date: "Mar 8, 2026",
       duration: "14:59",
@@ -206,6 +209,7 @@ const SITE_DATA = {
     {
       id: 4,
       youtube_id: "2hHOaMJ6AZc",
+      slug: "the-giant-children-they-took-from-orphanages-and-sold-to-the-circus",
       title:
         "The Giant Children They Took From Orphanages and Sold to the Circus",
       date: "Mar 7, 2026",
@@ -219,6 +223,7 @@ const SITE_DATA = {
     {
       id: 5,
       youtube_id: "k7UOqLTEmpg",
+      slug: "74-boys-were-fed-radiation-for-breakfast-then-labeled-morons",
       title:
         '74 Boys Were Fed Radiation for Breakfast — Then Labeled "Morons" So No One Would Believe Them',
       date: "Mar 6, 2026",
@@ -232,6 +237,7 @@ const SITE_DATA = {
     {
       id: 6,
       youtube_id: "vcA8SHmphfw",
+      slug: "a-124-year-bulb-they-made-sure-no-one-could-ever-build-again",
       title: "A 124 Year Bulb They Made Sure No One Could Ever Build Again",
       date: "Mar 5, 2026",
       duration: "15:25",
@@ -244,6 +250,7 @@ const SITE_DATA = {
     {
       id: 7,
       youtube_id: "zqxO4ACtt9c",
+      slug: "americas-land-map-has-a-haunting-in-it-1910-paper-trail",
       title: 'America\'s Land Map Has a "Haunting" in It (1910 Paper Trail)',
       date: "Mar 4, 2026",
       duration: "15:52",
@@ -256,6 +263,7 @@ const SITE_DATA = {
     {
       id: 8,
       youtube_id: "0dMMgGrfx3Y",
+      slug: "what-kind-of-school-has-a-cemetery-the-carlisle-story",
       title:
         'What Kind of "School" Has a Cemetery? The Carlisle Story They Never Taught You',
       date: "Mar 3, 2026",
@@ -269,6 +277,7 @@ const SITE_DATA = {
     {
       id: 9,
       youtube_id: "Y4cOa1KKzy0",
+      slug: "america-had-a-system-that-turned-living-people-into-missing-people",
       title:
         "America Had a System That Turned Living People Into Missing People",
       date: "Mar 2, 2026",
@@ -282,6 +291,7 @@ const SITE_DATA = {
     {
       id: 10,
       youtube_id: "uDuQo63GHGI",
+      slug: "the-frequency-they-changed-and-why-everything-sounds-wrong",
       title: "The Frequency They Changed — And Why Everything Sounds Wrong",
       date: "Mar 1, 2026",
       duration: "16:02",
@@ -294,6 +304,7 @@ const SITE_DATA = {
     {
       id: 11,
       youtube_id: "2DfUjc7eb8U",
+      slug: "the-first-movie-ever-made-was-about-babies-growing-in-a-garden",
       title:
         "The First Movie Ever Made Was About Babies Growing in a Garden 1896 Story",
       date: "Mar 1, 2026",
@@ -307,6 +318,7 @@ const SITE_DATA = {
     {
       id: 12,
       youtube_id: "bsya8bTlNSU",
+      slug: "the-pope-who-literally-ate-200-years-and-made-the-world-forget",
       title:
         "The Pope Who Literally Ate 200 Years and Made the World Forget They Existed",
       date: "Feb 28, 2026",
@@ -320,6 +332,7 @@ const SITE_DATA = {
     {
       id: 13,
       youtube_id: "7P54aeWneY8",
+      slug: "declassified-cia-document-says-history-of-tartaria-was-falsified",
       title:
         "A Declassified CIA Document Says the History of Tartaria Was Deliberately Falsified",
       date: "Feb 28, 2026",
@@ -333,6 +346,7 @@ const SITE_DATA = {
     {
       id: 14,
       youtube_id: "tJN6IuTF2r4",
+      slug: "woman-disagreed-with-husband-in-1860-didnt-come-home-for-3-years",
       title:
         "A Woman Disagreed With Her Husband in 1860 — She Didn't Come Home for Three Years",
       date: "Feb 27, 2026",
@@ -346,6 +360,7 @@ const SITE_DATA = {
     {
       id: 15,
       youtube_id: "xzEcPVKNrkQ",
+      slug: "90-of-orphanage-children-had-living-parents-so-why-were-they-there",
       title:
         "90% of Orphanage Children Had Living Parents — So Why Were They There?",
       date: "Feb 26, 2026",
@@ -359,6 +374,7 @@ const SITE_DATA = {
     {
       id: 16,
       youtube_id: "Ziuvezvo60Q",
+      slug: "they-stole-57-million-from-freed-slaves-then-made-frederick-douglass-take-blame",
       title:
         "They Stole $57 Million From Freed Slaves — Then Made Frederick Douglass Take the Blame",
       date: "Feb 25, 2026",
@@ -372,6 +388,7 @@ const SITE_DATA = {
     {
       id: 17,
       youtube_id: "VwCZQVSzu8I",
+      slug: "500-million-acres-the-biggest-land-grab-in-history",
       title:
         "500 Million Acres — The Biggest Land Grab in History Was Disguised as a Gift",
       date: "Feb 24, 2026",
@@ -385,6 +402,7 @@ const SITE_DATA = {
     {
       id: 18,
       youtube_id: "CIIYCR8olXI",
+      slug: "they-put-living-babies-on-display-at-the-worlds-fair",
       title:
         "They Put Living Babies on Display at the World's Fair — And Nobody Asked Where They Came From",
       date: "Feb 23, 2026",
@@ -398,6 +416,7 @@ const SITE_DATA = {
     {
       id: 19,
       youtube_id: "25QVf-zPNlo",
+      slug: "how-men-could-erase-their-wives-overnight-one-signature-no-hearing",
       title:
         "How Men Could Erase Their Wives Overnight — One Signature, No Hearing",
       date: "Feb 22, 2026",
@@ -411,6 +430,7 @@ const SITE_DATA = {
     {
       id: 20,
       youtube_id: "XVopg6F5TgY",
+      slug: "the-island-where-everyone-spoke-a-secret-language-until-bell-found-them",
       title:
         "The Island Where Everyone Spoke a Secret Language — Until Alexander Graham Bell Found Them",
       date: "Feb 21, 2026",

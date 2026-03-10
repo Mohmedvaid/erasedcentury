@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archive — Erased Century</title>
+  <meta name="description" content="All Erased Century investigations. Every video sourced, every claim documented.">
+  <link rel="icon" type="image/png" href="../assets/images/logo-min-nbg.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .video-page { padding: 8rem 0 6rem; }
+    .video-back { margin-bottom: 2rem; display: inline-block; }
+    .video-page h1 { font-family: 'Instrument Serif', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.2; letter-spacing: -.01em; color: var(--white); margin-bottom: .75rem; }
+    .video-player-wrap { width: 100%; aspect-ratio: 16/9; background: var(--surface); margin-bottom: 2.5rem; overflow: hidden; }
+    .video-player-wrap iframe { width: 100%; height: 100%; border: none; }
+    .video-meta { font-family: 'Space Mono', monospace; font-size: .6rem; letter-spacing: .1em; color: var(--text-muted); display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .video-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-muted); }
+    .video-desc { font-size: 1rem; font-weight: 300; line-height: 1.8; color: var(--text-secondary); margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); white-space: pre-wrap; }
+    .video-sources { margin-bottom: 3rem; }
+    .more-investigations { margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border); }
+    .more-investigations .section-title { margin-bottom: 1.5rem; }
+    .vid-card { text-decoration: none; display: block; color: inherit; }
+  </style>
+</head>
+
+<body>
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <img src="../assets/images/logo-min-nbg.png" alt="Erased Century" class="nav-logo-img">
+        <span class="nav-wordmark" id="navName">Erased Century</span>
+      </a>
+      <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <div class="nav-links" id="navLinks">
+        <a href="/videos/" class="nav-link">Archive</a>
+        <a href="/#about" class="nav-link">About</a>
+        <a href="#" class="nav-link" id="navContact">Contact</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </button>
+        <a href="#" target="_blank" rel="noopener" class="nav-cta" id="navSubscribe">Subscribe</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="pageContent"></main>
+
+  <section class="email-section" id="signup">
+    <div class="container">
+      <div class="email-inner">
+        <div class="section-label">Stay Informed</div>
+        <h2>Get the research behind each video</h2>
+        <p>Sources, extended research, and new investigations — delivered to your inbox.</p>
+        <div class="email-inline-recaptcha">
+          <div class="g-recaptcha" data-theme="dark" id="recaptchaInline"></div>
+        </div>
+        <div class="email-inline-form">
+          <input type="email" class="email-inline-input" id="inlineEmail" placeholder="Enter your email" required>
+          <button class="email-inline-submit" id="inlineSubmit" onclick="submitInline()">Join</button>
+        </div>
+        <div id="inlineMsg"></div>
+        <p class="email-note">Free forever. Unsubscribe anytime.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-left" id="footerCopy"></div>
+        <div class="footer-links" id="footerLinks"></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../data.js"></script>
+  <script>
+    const VIDEOS = (typeof SITE_DATA !== 'undefined' && SITE_DATA.videos) ? SITE_DATA.videos : [];
+    const CHANNEL = (typeof SITE_DATA !== 'undefined' && SITE_DATA.channel) ? SITE_DATA.channel : {};
+
+    function thumb(v) {
+      if (v.thumbnail) return v.thumbnail;
+      return `https://img.youtube.com/vi/${v.youtube_id}/maxresdefault.jpg`;
+    }
+
+    function countSources(v) {
+      if (!v.sources || !v.sources.length) return 0;
+      if (v.sources[0] && v.sources[0].category) {
+        return v.sources.reduce((sum, cat) => sum + (cat.items ? cat.items.length : 0), 0);
+      }
+      return v.sources.length;
+    }
+
+    function renderSources(v) {
+      if (!v.sources || !v.sources.length) {
+        return `<div class="src-coming-soon">
+          <div class="src-coming-soon-icon">◇</div>
+          <p>Sources coming soon</p>
+          <p class="src-cs-sub">Detailed references and research notes for this investigation are being compiled.</p>
+        </div>`;
+      }
+      if (v.sources[0] && v.sources[0].category) {
+        const total = countSources(v);
+        return `<div class="src-total">${total} sources across ${v.sources.length} categories</div>` +
+          v.sources.map((cat, ci) => `
+            <div class="src-category${ci === 0 ? ' open' : ''}" data-cat="${ci}">
+              <div class="src-category-head" onclick="this.parentElement.classList.toggle('open')">
+                <span class="src-category-label">${cat.category}</span>
+                <span class="src-category-count">${cat.items.length} sources <span class="src-category-toggle">▼</span></span>
+              </div>
+              <div class="src-category-items">
+                ${cat.items.map(s => `
+                  <div class="src-item-rich">
+                    ${s.type ? `<span class="src-badge ${s.type}">${s.type}</span>` : ''}
+                    <div class="src-item-content">
+                      <div class="src-item-title">${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${s.text}</a>` : s.text}</div>
+                      ${s.note ? `<div class="src-item-note">${s.note}</div>` : ''}
+                    </div>
+                  </div>`).join('')}
+              </div>
+            </div>`).join('');
+      }
+      return v.sources.map((s, i) =>
+        `<div class="src-item"><span class="src-num">${String(i + 1).padStart(2, '0')}</span><span class="src-text">${s.url ? `<a href="${s.url}" target="_blank">${s.text}</a>` : s.text}</span></div>`
+      ).join('');
+    }
+
+    function cardHTML(v) {
+      const sc = countSources(v);
+      const slug = v.slug || v.youtube_id;
+      return `
+        <a href="/videos/#${slug}" class="vid-card sr" data-slug="${slug}">
+          <div class="vid-card-img">
+            <img src="${thumb(v)}" alt="${v.title}" loading="lazy" onerror="this.style.display='none'">
+            <span class="dur">${v.duration}</span>
+            <div class="play-overlay"><div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg></div></div>
+          </div>
+          <div class="vid-card-body">
+            <div class="vid-card-meta">${v.date} <span class="dot"></span> ${v.views} views</div>
+            <h3 class="vid-card-title">${v.title}</h3>
+            <span class="vid-card-sources">${sc ? sc + ' sources cited' : 'Sources coming soon'}</span>
+          </div>
+        </a>`;
+    }
+
+    function renderArchive() {
+      document.getElementById('pageContent').innerHTML = `
+        <section class="featured">
+          <div class="container">
+            <div class="section-head">
+              <div>
+                <div class="section-label">The Archive</div>
+                <h1 class="section-title">All Investigations</h1>
+                <p class="section-desc">Every video sourced, every claim documented.</p>
+              </div>
+              <a href="${CHANNEL.youtube_url || '#'}/videos" target="_blank" class="view-all">View all on YouTube →</a>
+            </div>
+            <div class="vid-grid" id="vidGrid">
+              ${VIDEOS.map((v, i) => cardHTML(v)).join('')}
+            </div>
+          </div>
+        </section>`;
+      document.title = `The Archive — ${CHANNEL.name || 'Erased Century'}`;
+      initObs();
+    }
+
+    function getRelated(v, n) {
+      const idx = VIDEOS.findIndex(x => x.id === v.id);
+      const out = [];
+      const half = Math.floor(n / 2);
+      for (let i = 1; i <= half; i++) {
+        const prev = VIDEOS[idx - i];
+        if (prev) out.unshift(prev);
+      }
+      for (let i = 1; i <= n - out.length; i++) {
+        const next = VIDEOS[idx + i];
+        if (next) out.push(next);
+      }
+      return out.slice(0, n);
+    }
+
+    function renderVideo(v) {
+      const related = getRelated(v, 3);
+      document.getElementById('pageContent').innerHTML = `
+        <section class="video-page">
+          <div class="container">
+            <a href="/videos/" class="modal-back video-back">← Back to Archive</a>
+            <div class="video-player-wrap">
+              <iframe src="https://www.youtube.com/embed/${v.youtube_id}?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope" allowfullscreen></iframe>
+            </div>
+            <h1>${v.title}</h1>
+            <div class="video-meta">${v.date} <span class="dot"></span> ${v.views} views <span class="dot"></span> ${v.duration}</div>
+            <div class="video-desc">${v.description || ''}</div>
+            <div class="video-sources">
+              <div class="modal-sidebar-label">Sources & References</div>
+              <div id="videoSourcesWrap">${renderSources(v)}</div>
+            </div>
+            ${related.length ? `
+            <div class="more-investigations">
+              <div class="section-label">More Investigations</div>
+              <h2 class="section-title">Keep exploring</h2>
+              <div class="vid-grid">${related.map(r => cardHTML(r)).join('')}</div>
+            </div>
+            ` : ''}
+          </div>
+        </section>`;
+      document.title = `${v.title} — ${CHANNEL.name || 'Erased Century'}`;
+      initObs();
+    }
+
+    function initObs() {
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+      }, { threshold: .08, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.sr:not(.vis)').forEach(el => obs.observe(el));
+    }
+
+    function renderPage() {
+      const hash = (window.location.hash || '').replace(/^#/, '');
+      const video = hash ? VIDEOS.find(v => (v.slug || v.youtube_id) === hash) : null;
+      if (video) renderVideo(video);
+      else renderArchive();
+    }
+
+    // Nav
+    function renderNav() {
+      document.getElementById('navName').textContent = CHANNEL.name || 'Erased Century';
+      document.getElementById('navSubscribe').href = CHANNEL.subscribe_url || '#';
+      document.getElementById('navContact').href = `mailto:${CHANNEL.contact_email || 'contact@erasedcentury.com'}`;
+    }
+
+    function renderFooter() {
+      const year = new Date().getFullYear();
+      document.getElementById('footerCopy').innerHTML = `&copy; ${CHANNEL.established || 2024}–${year} Bold Core Media LLC`;
+      document.getElementById('footerLinks').innerHTML = `
+        <a href="${CHANNEL.youtube_url || '#'}" target="_blank">YouTube</a>
+        <a href="/videos/">Archive</a>
+        <a href="mailto:${CHANNEL.contact_email || 'contact@erasedcentury.com'}">Contact</a>`;
+    }
+
+    window.addEventListener('hashchange', renderPage);
+    renderNav();
+    renderFooter();
+    renderPage();
+
+    // Theme toggle
+    (function () {
+      const saved = localStorage.getItem('theme');
+      if (saved) document.documentElement.setAttribute('data-theme', saved);
+      document.getElementById('themeToggle').addEventListener('click', function () {
+        const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        if (typeof reRenderRecaptcha === 'function') reRenderRecaptcha(next);
+      });
+    })();
+
+    window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 40));
+    document.getElementById('burger').addEventListener('click', function () {
+      this.classList.toggle('open');
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => {
+      document.getElementById('burger').classList.remove('open');
+      document.getElementById('navLinks').classList.remove('open');
+    }));
+
+    // Email signup (from data.js)
+    const BEEHIIV_MAGIC = (typeof SITE_DATA !== 'undefined' && SITE_DATA.beehiiv_magic_link) ? SITE_DATA.beehiiv_magic_link : '';
+    const RC_KEY = (typeof SITE_DATA !== 'undefined' && SITE_DATA.recaptcha_site_key) ? SITE_DATA.recaptcha_site_key : '';
+    let inlineWidgetId;
+    function onRecaptchaLoad() {
+      if (typeof grecaptcha === 'undefined' || !RC_KEY) return;
+      var rcTheme = (document.documentElement.getAttribute('data-theme') || 'dark') === 'light' ? 'light' : 'dark';
+      try { inlineWidgetId = grecaptcha.render('recaptchaInline', { sitekey: RC_KEY, theme: rcTheme }); } catch (e) {}
+    }
+    function reRenderRecaptcha(theme) {
+      if (typeof grecaptcha === 'undefined' || !RC_KEY) return;
+      var el = document.getElementById('recaptchaInline');
+      if (!el) return;
+      el.innerHTML = '';
+      inlineWidgetId = grecaptcha.render('recaptchaInline', { sitekey: RC_KEY, theme: theme === 'light' ? 'light' : 'dark' });
+    }
+    function validateEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+    function showMsg(elId, text, type) {
+      const el = document.getElementById(elId); if (!el) return;
+      el.className = type === 'success' ? 'email-inline-msg success' : 'email-inline-msg error';
+      el.textContent = text;
+    }
+    async function submitToBeehiiv(email, msgElId, btnEl, widgetId) {
+      if (!validateEmail(email)) { showMsg(msgElId, 'Please enter a valid email address.', 'error'); return; }
+      const rc = grecaptcha.getResponse(widgetId);
+      if (!rc) { showMsg(msgElId, 'Please complete the captcha first.', 'error'); return; }
+      btnEl.disabled = true; btnEl.textContent = '...';
+      try {
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = `${BEEHIIV_MAGIC}?email=${encodeURIComponent(email)}`;
+        document.body.appendChild(iframe);
+        showMsg(msgElId, "You're in! Check your inbox to confirm.", 'success');
+        btnEl.textContent = 'Done';
+        grecaptcha.reset(widgetId);
+      } catch (err) {
+        showMsg(msgElId, 'Something went wrong. Please try again.', 'error');
+        btnEl.disabled = false; btnEl.textContent = 'Join';
+        grecaptcha.reset(widgetId);
+      }
+    }
+    function submitInline() { submitToBeehiiv(document.getElementById('inlineEmail').value.trim(), 'inlineMsg', document.getElementById('inlineSubmit'), inlineWidgetId); }
+    document.addEventListener('DOMContentLoaded', () => {
+      const ie = document.getElementById('inlineEmail');
+      if (ie) ie.addEventListener('keydown', e => { if (e.key === 'Enter') submitInline(); });
+    });
+  </script>
+</body>
+
+</html>

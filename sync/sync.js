@@ -80,6 +80,16 @@ function formatDate(isoDate) {
   });
 }
 
+function slugify(title) {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+    .substring(0, 60);
+}
+
 function formatDuration(iso) {
   // PT15M46S → 15:46, PT1H2M3S → 1:02:03
   const match = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
@@ -158,6 +168,7 @@ async function fetchLatestVideos() {
   return videosData.items.map((item, index) => ({
     id: index + 1,
     youtube_id: item.id,
+    slug: slugify(item.snippet.title),
     title: item.snippet.title,
     date: formatDate(item.snippet.publishedAt),
     duration: formatDuration(item.contentDetails.duration),
@@ -168,22 +179,27 @@ async function fetchLatestVideos() {
   }));
 }
 
-// ---- Merge sources from existing data ----
+// ---- Merge sources and slugs from existing data ----
 function mergeVideoSources(newVideos, existingVideos) {
   if (!existingVideos || !existingVideos.length) return newVideos;
 
-  // Build a lookup of existing sources by youtube_id
+  // Build lookups by youtube_id
   const sourcesMap = {};
+  const slugMap = {};
   existingVideos.forEach((v) => {
     if (v.youtube_id && v.sources && v.sources.length) {
       sourcesMap[v.youtube_id] = v.sources;
     }
+    if (v.youtube_id && v.slug) {
+      slugMap[v.youtube_id] = v.slug;
+    }
   });
 
-  // Merge sources into new videos
+  // Merge sources and preserve existing slugs
   return newVideos.map((v) => ({
     ...v,
-    sources: sourcesMap[v.youtube_id] || v.sources || []
+    sources: sourcesMap[v.youtube_id] || v.sources || [],
+    slug: slugMap[v.youtube_id] || slugify(v.title)
   }));
 }
 
