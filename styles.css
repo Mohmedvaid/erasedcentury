@@ -188,7 +188,7 @@ body::after {
 .nav-wordmark {
   font-family: 'Instrument Serif', serif;
   font-size: 1.2rem;
-  letter-spacing: -.01em
+  letter-spacing: .02em
 }
 
 .nav-links {
@@ -441,7 +441,7 @@ body::after {
   font-family: 'Instrument Serif', serif;
   font-size: clamp(3rem, 7vw, 5.5rem);
   line-height: 1.05;
-  letter-spacing: -.025em;
+  letter-spacing: .02em;
   color: var(--white);
   margin-bottom: 1.5rem
 }
@@ -535,6 +535,7 @@ a.btn-secondary {
 .hero-stat-val {
   font-family: 'Instrument Serif', serif;
   font-size: 2rem;
+  letter-spacing: .02em;
   color: var(--white)
 }
 
@@ -575,7 +576,7 @@ a.btn-secondary {
 .section-title {
   font-family: 'Instrument Serif', serif;
   font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-  letter-spacing: -.015em;
+  letter-spacing: .02em;
   color: var(--white);
   margin-bottom: .5rem
 }
@@ -692,7 +693,7 @@ a.btn-secondary {
   font-family: 'Instrument Serif', serif;
   font-size: clamp(1.4rem, 2.5vw, 2rem);
   line-height: 1.2;
-  letter-spacing: -.01em;
+  letter-spacing: .02em;
   color: var(--white);
   margin-bottom: 1rem
 }
@@ -849,7 +850,7 @@ a.btn-secondary {
   font-family: 'Instrument Serif', serif;
   font-size: 1.15rem;
   line-height: 1.3;
-  letter-spacing: -.005em;
+  letter-spacing: .02em;
   color: var(--text-primary);
   margin-bottom: .75rem;
   display: -webkit-box;
@@ -1254,7 +1255,7 @@ a.btn-secondary {
   font-style: italic;
   line-height: 1.3;
   color: var(--white);
-  letter-spacing: -.01em
+  letter-spacing: .02em
 }
 
 .about-right p {
@@ -1358,7 +1359,7 @@ a.btn-secondary {
   font-family: 'Instrument Serif', serif;
   font-size: clamp(1.5rem, 3vw, 2.2rem);
   color: var(--white);
-  letter-spacing: -.01em;
+  letter-spacing: .02em;
   margin-bottom: .75rem
 }
 
