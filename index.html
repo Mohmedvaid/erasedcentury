@@ -77,7 +77,7 @@
         <h1 class="hero-title sr sr-d1">The history they<br>tried to <em>erase</em></h1>
         <p class="hero-desc sr sr-d2" id="heroDesc"></p>
         <div class="hero-actions sr sr-d3">
-          <a href="#archive" class="btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          <a href="/videos/" class="btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2">
               <polygon points="5,3 19,12 5,21" />
             </svg> Watch the Archive</a>
@@ -142,7 +142,7 @@
         <div class="section-label">Stay Informed</div>
         <h2>Get the research behind each video</h2>
         <p>Sources, extended research, and new investigations — delivered to your inbox. No spam, no fluff.</p>
-        <div class="email-inline-recaptcha">
+        <div class="email-inline-recaptcha recaptcha-hidden" id="recaptchaWrap">
           <div class="g-recaptcha" data-theme="dark" id="recaptchaInline"></div>
         </div>
         <div class="email-inline-form">
@@ -378,10 +378,9 @@
 
       function reRenderRecaptcha(theme) {
         if (typeof grecaptcha === 'undefined') return;
-        var rcTheme = theme === 'light' ? 'light' : 'dark';
         var inlineEl = document.getElementById('recaptchaInline');
         inlineEl.innerHTML = '';
-        inlineWidgetId = grecaptcha.render('recaptchaInline', { sitekey: RC_KEY, theme: rcTheme });
+        inlineWidgetId = grecaptcha.render('recaptchaInline', getRecaptchaOpts(theme));
       }
     })();
 
@@ -399,9 +398,18 @@
 
     // Explicit reCAPTCHA rendering (called by API onload callback)
     let inlineWidgetId;
+    const recaptchaWrap = document.getElementById('recaptchaWrap');
+    function getRecaptchaOpts(theme) {
+      var rcTheme = theme || (document.documentElement.getAttribute('data-theme') || 'dark');
+      rcTheme = rcTheme === 'light' ? 'light' : 'dark';
+      return {
+        sitekey: RC_KEY,
+        theme: rcTheme,
+        callback: function () { submitInline(); }
+      };
+    }
     function onRecaptchaLoad() {
-      var rcTheme = (document.documentElement.getAttribute('data-theme') || 'dark') === 'light' ? 'light' : 'dark';
-      inlineWidgetId = grecaptcha.render('recaptchaInline', { sitekey: RC_KEY, theme: rcTheme });
+      inlineWidgetId = grecaptcha.render('recaptchaInline', getRecaptchaOpts());
     }
 
     function validateEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
@@ -412,11 +420,18 @@
       el.textContent = text;
     }
 
+    function showRecaptcha() { recaptchaWrap && recaptchaWrap.classList.remove('recaptcha-hidden'); }
+    function hideRecaptcha() { recaptchaWrap && recaptchaWrap.classList.add('recaptcha-hidden'); }
+
     async function submitToBeehiiv(email, msgElId, btnEl, widgetId) {
       if (!validateEmail(email)) { showMsg(msgElId, 'Please enter a valid email address.', 'error'); return; }
 
       const rc = grecaptcha.getResponse(widgetId);
-      if (!rc) { showMsg(msgElId, 'Please complete the captcha first.', 'error'); return; }
+      if (!rc) {
+        showRecaptcha();
+        showMsg(msgElId, 'Please complete the captcha.', 'error');
+        return;
+      }
 
       btnEl.disabled = true; btnEl.textContent = '...';
       try {
@@ -427,6 +442,7 @@
         showMsg(msgElId, "You're in! Check your inbox to confirm.", 'success');
         btnEl.textContent = 'Done';
         grecaptcha.reset(widgetId);
+        hideRecaptcha();
       } catch (err) {
         showMsg(msgElId, 'Something went wrong. Please try again.', 'error');
         btnEl.disabled = false; btnEl.textContent = 'Join';

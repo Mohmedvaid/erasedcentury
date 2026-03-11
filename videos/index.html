@@ -70,7 +70,7 @@
         <div class="section-label">Stay Informed</div>
         <h2>Get the research behind each video</h2>
         <p>Sources, extended research, and new investigations — delivered to your inbox.</p>
-        <div class="email-inline-recaptcha">
+        <div class="email-inline-recaptcha recaptcha-hidden" id="recaptchaWrap">
           <div class="g-recaptcha" data-theme="dark" id="recaptchaInline"></div>
         </div>
         <div class="email-inline-form">
@@ -289,17 +289,22 @@
     const BEEHIIV_MAGIC = (typeof SITE_DATA !== 'undefined' && SITE_DATA.beehiiv_magic_link) ? SITE_DATA.beehiiv_magic_link : '';
     const RC_KEY = (typeof SITE_DATA !== 'undefined' && SITE_DATA.recaptcha_site_key) ? SITE_DATA.recaptcha_site_key : '';
     let inlineWidgetId;
+    const recaptchaWrap = document.getElementById('recaptchaWrap');
+    function getRecaptchaOpts(theme) {
+      var rcTheme = theme || (document.documentElement.getAttribute('data-theme') || 'dark');
+      rcTheme = rcTheme === 'light' ? 'light' : 'dark';
+      return { sitekey: RC_KEY, theme: rcTheme, callback: function () { submitInline(); } };
+    }
     function onRecaptchaLoad() {
       if (typeof grecaptcha === 'undefined' || !RC_KEY) return;
-      var rcTheme = (document.documentElement.getAttribute('data-theme') || 'dark') === 'light' ? 'light' : 'dark';
-      try { inlineWidgetId = grecaptcha.render('recaptchaInline', { sitekey: RC_KEY, theme: rcTheme }); } catch (e) {}
+      try { inlineWidgetId = grecaptcha.render('recaptchaInline', getRecaptchaOpts()); } catch (e) {}
     }
     function reRenderRecaptcha(theme) {
       if (typeof grecaptcha === 'undefined' || !RC_KEY) return;
       var el = document.getElementById('recaptchaInline');
       if (!el) return;
       el.innerHTML = '';
-      inlineWidgetId = grecaptcha.render('recaptchaInline', { sitekey: RC_KEY, theme: theme === 'light' ? 'light' : 'dark' });
+      inlineWidgetId = grecaptcha.render('recaptchaInline', getRecaptchaOpts(theme));
     }
     function validateEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
     function showMsg(elId, text, type) {
@@ -307,10 +312,16 @@
       el.className = type === 'success' ? 'email-inline-msg success' : 'email-inline-msg error';
       el.textContent = text;
     }
+    function showRecaptcha() { recaptchaWrap && recaptchaWrap.classList.remove('recaptcha-hidden'); }
+    function hideRecaptcha() { recaptchaWrap && recaptchaWrap.classList.add('recaptcha-hidden'); }
     async function submitToBeehiiv(email, msgElId, btnEl, widgetId) {
       if (!validateEmail(email)) { showMsg(msgElId, 'Please enter a valid email address.', 'error'); return; }
       const rc = grecaptcha.getResponse(widgetId);
-      if (!rc) { showMsg(msgElId, 'Please complete the captcha first.', 'error'); return; }
+      if (!rc) {
+        showRecaptcha();
+        showMsg(msgElId, 'Please complete the captcha.', 'error');
+        return;
+      }
       btnEl.disabled = true; btnEl.textContent = '...';
       try {
         const iframe = document.createElement('iframe');
@@ -320,6 +331,7 @@
         showMsg(msgElId, "You're in! Check your inbox to confirm.", 'success');
         btnEl.textContent = 'Done';
         grecaptcha.reset(widgetId);
+        hideRecaptcha();
       } catch (err) {
         showMsg(msgElId, 'Something went wrong. Please try again.', 'error');
         btnEl.disabled = false; btnEl.textContent = 'Join';
