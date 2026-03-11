@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=Space+Mono:wght@400;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Space+Mono:wght@400;700&display=swap"
     rel="stylesheet">
   <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
   <script>
@@ -26,7 +26,6 @@
     })();
   </script>
   <link rel="stylesheet" href="./styles.css">
-  <style></style>
 </head>
 
 <body>
@@ -37,11 +36,13 @@
         <img src="./assets/images/logo-min-nbg.png" alt="Erased Century" class="nav-logo-img"><span class="nav-wordmark"
           id="navName">Erased Century</span>
       </a>
-      <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
       <div class="nav-links" id="navLinks">
         <a href="/videos/" class="nav-link">Archive</a>
         <a href="#about" class="nav-link">About</a>
         <a href="#" class="nav-link" id="navContact">Contact</a>
+        <a href="#" target="_blank" rel="noopener" class="nav-cta" id="navSubscribe">Subscribe</a>
+      </div>
+      <div class="nav-actions">
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
           <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
@@ -60,7 +61,7 @@
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
           </svg>
         </button>
-        <a href="#" target="_blank" rel="noopener" class="nav-cta" id="navSubscribe">Subscribe</a>
+        <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
       </div>
     </div>
   </nav>
@@ -271,7 +272,7 @@
       const slug = v.slug || v.youtube_id;
       fh.innerHTML = `
         <div class="feat-hero-img">
-          <img src="${thumb(v)}" alt="${v.title}" loading="lazy" onerror="this.style.display='none'">
+          <img src="${thumb(v)}" alt="${v.title}" onerror="this.style.display='none'">
           <div class="badge">Latest</div>
         </div>
         <div class="feat-hero-body">
@@ -350,10 +351,10 @@
     function renderFooter() {
       const c = SITE.channel;
       const year = new Date().getFullYear();
-      document.getElementById('footerCopy').innerHTML = `&copy; ${c.established}–${year} Bold Core Media LLC`;
+      document.getElementById('footerCopy').innerHTML = `&copy; ${c.established}–${year} ${c.company || 'Bold Core Media LLC'}`;
       document.getElementById('footerLinks').innerHTML = `
         <a href="${c.youtube_url}" target="_blank">YouTube</a>
-        <a href="#archive">Archive</a>
+        <a href="/videos/">Archive</a>
         <a href="mailto:${c.contact_email}">Contact</a>
       `;
     }

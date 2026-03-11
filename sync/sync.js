@@ -265,7 +265,8 @@ async function main() {
       subscribers: channelStats.subscribers,
       documentaries: channelStats.documentaries,
       total_views: channelStats.total_views,
-      established: existing?.channel?.established || 2024
+      established: existing?.channel?.established || 2024,
+      company: existing?.channel?.company || "Bold Core Media LLC"
     },
 
     about: existing?.about || {

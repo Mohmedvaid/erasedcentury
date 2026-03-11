@@ -40,6 +40,7 @@ const SITE_DATA = {
     subscribe_url:
       "https://www.youtube.com/channel/UCbbeQCNpFiblWYm3tb4PNZA?sub_confirmation=1",
     contact_email: "erasedcentury@gmail.com",
+    company: "Bold Core Media LLC",
     subscribers: "39.4K",
     documentaries: 41,
     total_views: "2.3M+",
