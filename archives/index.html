@@ -1167,20 +1167,28 @@
     }
 
     .banner-msg {
+      display: inline-flex;
+      align-items: center;
       font-family: 'Space Mono', monospace;
-      font-size: .6rem;
-      letter-spacing: .05em;
-      padding: .4rem .75rem
+      font-size: .85rem;
+      letter-spacing: .04em;
+      line-height: 1.4;
+      margin-top: .75rem;
+      padding: .5rem .9rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
     }
 
     .banner-msg.success {
-      color: #7ecb8b;
-      background: rgba(126, 203, 139, .08)
+      color: var(--msg-success-text);
+      background: var(--msg-success-bg);
+      border-color: var(--msg-success-border);
     }
 
     .banner-msg.error {
-      color: #cb7e7e;
-      background: rgba(203, 126, 126, .08)
+      color: var(--msg-error-text);
+      background: var(--msg-error-bg);
+      border-color: var(--msg-error-border);
     }
 
     /* INLINE EMAIL SECTION (above footer) */
@@ -1751,6 +1759,14 @@
         document.body.appendChild(iframe);
 
         showMsg(msgElId, 'You\'re in! Check your inbox to confirm.', 'success');
+        if (msgElId === 'inlineMsg') {
+          const inlineInput = document.getElementById('inlineEmail');
+          if (inlineInput) inlineInput.value = '';
+        }
+        if (msgElId === 'bannerMsg') {
+          const bannerInput = document.getElementById('bannerEmail');
+          if (bannerInput) bannerInput.value = '';
+        }
         btnEl.textContent = 'Done';
 
         // Hide banner after successful submit

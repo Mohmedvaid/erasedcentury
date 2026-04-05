@@ -18,6 +18,12 @@
   --play-overlay-bg: rgba(12, 11, 9, .3);
   --dur-bg: rgba(12, 11, 9, .85);
   --shadow-card: rgba(0, 0, 0, .3);
+  --msg-success-text: #c9ffce;
+  --msg-success-bg: rgba(60, 186, 104, 0.16);
+  --msg-success-border: rgba(60, 186, 104, 0.28);
+  --msg-error-text: #ffc4c2;
+  --msg-error-bg: rgba(221, 94, 94, 0.16);
+  --msg-error-border: rgba(221, 94, 94, 0.28);
 }
 
 [data-theme="light"] {
@@ -39,6 +45,12 @@
   --play-overlay-bg: rgba(245, 241, 235, .4);
   --dur-bg: rgba(26, 24, 21, .8);
   --shadow-card: rgba(0, 0, 0, .08);
+  --msg-success-text: #11592f;
+  --msg-success-bg: rgba(27, 121, 62, 0.12);
+  --msg-success-border: rgba(27, 121, 62, 0.28);
+  --msg-error-text: #7a1f1f;
+  --msg-error-bg: rgba(223, 96, 96, 0.12);
+  --msg-error-border: rgba(223, 96, 96, 0.28);
 }
 
 *,
@@ -1435,18 +1447,28 @@ a.btn-secondary {
 }
 
 .email-inline-msg {
+  display: inline-flex;
+  align-items: center;
   font-family: 'Space Mono', monospace;
-  font-size: .65rem;
-  letter-spacing: .05em;
-  margin-top: .75rem
+  font-size: .85rem;
+  letter-spacing: .04em;
+  line-height: 1.4;
+  margin-top: .75rem;
+  padding: .5rem .9rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
 }
 
 .email-inline-msg.success {
-  color: #7ecb8b
+  color: var(--msg-success-text);
+  background: var(--msg-success-bg);
+  border-color: var(--msg-success-border);
 }
 
 .email-inline-msg.error {
-  color: #cb7e7e
+  color: var(--msg-error-text);
+  background: var(--msg-error-bg);
+  border-color: var(--msg-error-border);
 }
 
 .email-note {

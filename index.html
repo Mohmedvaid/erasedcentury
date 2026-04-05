@@ -451,6 +451,8 @@
         iframe.src = `${BEEHIIV_MAGIC}?email=${encodeURIComponent(email)}`;
         document.body.appendChild(iframe);
         showMsg(msgElId, "You're in! Check your inbox to confirm.", 'success');
+        const inlineInput = document.getElementById('inlineEmail');
+        if (inlineInput) inlineInput.value = '';
         btnEl.textContent = 'Done';
         grecaptcha.reset(widgetId);
         hideRecaptcha();
