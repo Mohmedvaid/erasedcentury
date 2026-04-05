@@ -18,6 +18,38 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=Space+Mono:wght@400;700&display=swap"
     rel="stylesheet">
+  <link rel="stylesheet" href="../silktide-consent-manager.css">
+  <style>
+    #stcm-wrapper {
+      --fontFamily: 'DM Sans', sans-serif;
+      --primaryColor: #C4A370;
+      --backgroundColor: #141310;
+      --textColor: #F5F0E8;
+      --boxShadow: 0 4px 24px rgba(0, 0, 0, .4);
+      --iconColor: #C4A370;
+      --iconBackgroundColor: #141310;
+    }
+    [data-theme="light"] #stcm-wrapper {
+      --primaryColor: #8B6F3A;
+      --backgroundColor: #FFFFFF;
+      --textColor: #1A1815;
+      --iconColor: #8B6F3A;
+      --iconBackgroundColor: #FFFFFF;
+    }
+    #stcm-icon { display: none !important; }
+    #stcm-banner .stcm-button-secondary { display: none !important; }
+  </style>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
+  </script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2PPQ638ED"></script>
   <script>
@@ -26,7 +58,6 @@
     gtag('js', new Date());
     gtag('config', 'G-Q2PPQ638ED');
   </script>
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <style>
     :root {
       --bg: #0C0B09;
@@ -1510,14 +1541,10 @@
         <div class="section-label">Stay Informed</div>
         <h2>Get the research behind each video</h2>
         <p>Sources, extended research, and new investigations — delivered to your inbox. No spam, no fluff.</p>
-        <div class="email-inline-recaptcha">
-          <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY" data-theme="dark" id="recaptchaInline"></div>
-        </div>
-        <div class="email-inline-form">
-          <input type="email" class="email-inline-input" id="inlineEmail" placeholder="Enter your email" required>
-          <button class="email-inline-submit" id="inlineSubmit" onclick="submitInline()">Join</button>
-        </div>
-        <div id="inlineMsg"></div>
+        <script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
+        <iframe src="https://subscribe-forms.beehiiv.com/96d031af-f53a-468c-b6c6-183ac50c01cf"
+          class="beehiiv-embed" data-test-id="beehiiv-embed" frameborder="0" scrolling="no"
+          style="width:100%;max-width:480px;margin:0 auto;background-color:transparent;border:none;display:block;"></iframe>
         <p class="email-note">Free forever. Unsubscribe anytime. We respect your inbox.</p>
       </div>
     </div>
@@ -1542,15 +1569,7 @@
       <div class="banner-text">
         <p><strong>Get the sources behind every video</strong> — straight to your inbox.</p>
       </div>
-      <div class="banner-form">
-        <div class="banner-recaptcha">
-          <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY" data-theme="dark" data-size="compact"
-            id="recaptchaBanner"></div>
-        </div>
-        <input type="email" class="banner-input" id="bannerEmail" placeholder="Your email">
-        <button class="banner-submit" id="bannerSubmit" onclick="submitBanner()">Subscribe</button>
-      </div>
-      <div id="bannerMsg"></div>
+      <a href="#signup" class="banner-submit" onclick="document.getElementById('emailBanner').classList.remove('show');document.getElementById('emailBanner').classList.add('hide');sessionStorage.setItem('bannerClosed','1');">Subscribe</a>
       <button class="banner-close" id="bannerClose" aria-label="Close">&times;</button>
     </div>
   </div>
@@ -1687,11 +1706,6 @@
 
     renderFeatHero(); renderGrid(); initObs();
 
-    // ==========================================
-    // EMAIL SIGNUP — BEEHIIV + reCAPTCHA
-    // ==========================================
-    const BEEHIIV_MAGIC = 'https://magic.beehiiv.com/v1/1ff062b4-35b2-4de9-930d-82c8a6939bbe';
-
     // ---- STICKY BANNER LOGIC ----
     const banner = document.getElementById('emailBanner');
     const bannerDismissed = sessionStorage.getItem('bannerClosed');
@@ -1721,110 +1735,42 @@
       sessionStorage.setItem('bannerClosed', '1');
     });
 
-    // ---- FORM SUBMISSION ----
-    function validateEmail(email) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
-
-    function showMsg(elId, text, type) {
-      const el = document.getElementById(elId);
-      el.className = type === 'success' ? (elId.includes('banner') ? 'banner-msg success' : 'email-inline-msg success') : (elId.includes('banner') ? 'banner-msg error' : 'email-inline-msg error');
-      el.textContent = text;
-    }
-
-    async function submitToBeehiiv(email, msgElId, btnEl, recaptchaWidgetId) {
-      if (!validateEmail(email)) {
-        showMsg(msgElId, 'Please enter a valid email address.', 'error');
-        return;
-      }
-
-      // Check reCAPTCHA
-      const recaptchaResponse = grecaptcha.getResponse(recaptchaWidgetId);
-      if (!recaptchaResponse) {
-        showMsg(msgElId, 'Please complete the captcha first.', 'error');
-        return;
-      }
-
-      btnEl.disabled = true;
-      btnEl.textContent = '...';
-
-      try {
-        // Redirect to Beehiiv magic link with email
-        const url = `${BEEHIIV_MAGIC}?email=${encodeURIComponent(email)}`;
-
-        // Use a hidden iframe to submit without leaving the page
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = url;
-        document.body.appendChild(iframe);
-
-        showMsg(msgElId, 'You\'re in! Check your inbox to confirm.', 'success');
-        if (msgElId === 'inlineMsg') {
-          const inlineInput = document.getElementById('inlineEmail');
-          if (inlineInput) inlineInput.value = '';
-        }
-        if (msgElId === 'bannerMsg') {
-          const bannerInput = document.getElementById('bannerEmail');
-          if (bannerInput) bannerInput.value = '';
-        }
-        btnEl.textContent = 'Done';
-
-        // Hide banner after successful submit
-        if (msgElId === 'bannerMsg') {
-          setTimeout(() => {
-            banner.classList.remove('show');
-            banner.classList.add('hide');
-            sessionStorage.setItem('bannerClosed', '1');
-          }, 3000);
-        }
-
-        // Reset recaptcha
-        grecaptcha.reset(recaptchaWidgetId);
-
-      } catch (err) {
-        showMsg(msgElId, 'Something went wrong. Please try again.', 'error');
-        btnEl.disabled = false;
-        btnEl.textContent = msgElId === 'bannerMsg' ? 'Subscribe' : 'Join';
-        grecaptcha.reset(recaptchaWidgetId);
-      }
-    }
-
-    // We need to track the widget IDs since we have two reCAPTCHA instances
-    let bannerWidgetId, inlineWidgetId;
-
-    // reCAPTCHA onload callback — rendered via explicit mode
-    // Since we use async defer, widgets render automatically by data attributes
-    // We'll grab widget IDs after the script loads
-    function getRecaptchaWidgets() {
-      try {
-        // The widgets are auto-rendered; we find them by container
-        const allWidgets = document.querySelectorAll('.g-recaptcha');
-        bannerWidgetId = 0;  // first rendered
-        inlineWidgetId = 1;  // second rendered
-      } catch (e) { }
-    }
-
-    // Poll until reCAPTCHA is ready
-    const rcCheck = setInterval(() => {
-      if (typeof grecaptcha !== 'undefined' && grecaptcha.getResponse) {
-        getRecaptchaWidgets();
-        clearInterval(rcCheck);
-      }
-    }, 500);
-
-    function submitBanner() {
-      const email = document.getElementById('bannerEmail').value.trim();
-      submitToBeehiiv(email, 'bannerMsg', document.getElementById('bannerSubmit'), bannerWidgetId);
-    }
-
-    function submitInline() {
-      const email = document.getElementById('inlineEmail').value.trim();
-      submitToBeehiiv(email, 'inlineMsg', document.getElementById('inlineSubmit'), inlineWidgetId);
-    }
-
-    // Allow enter key to submit
-    document.getElementById('bannerEmail').addEventListener('keydown', e => { if (e.key === 'Enter') submitBanner(); });
-    document.getElementById('inlineEmail').addEventListener('keydown', e => { if (e.key === 'Enter') submitInline(); });
+  </script>
+  <script async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
+  <script src="../silktide-consent-manager.js"></script>
+  <script>
+    window.silktideConsentManager.init({
+      consentTypes: [
+        {
+          id: 'essential',
+          label: 'Essential',
+          description: 'These are necessary for the website to function and cannot be switched off.',
+          required: true,
+        },
+        {
+          id: 'analytics',
+          label: 'Analytics',
+          description: 'These help us understand how visitors interact with the website.',
+          defaultValue: false,
+          gtag: 'analytics_storage',
+        },
+        {
+          id: 'marketing',
+          label: 'Marketing',
+          description: 'These are used to deliver personalized advertisements.',
+          defaultValue: false,
+          gtag: ['ad_storage', 'ad_user_data', 'ad_personalization'],
+        },
+      ],
+      text: {
+        prompt: {
+          acceptAllButtonText: 'Accept',
+          preferencesButtonText: 'Manage',
+        },
+      },
+      prompt: { position: 'bottomRight' },
+      icon: { position: 'bottomLeft' },
+    });
   </script>
 </body>
 
