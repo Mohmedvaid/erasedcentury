@@ -215,9 +215,21 @@
     const VIDEOS = (typeof SITE_DATA !== 'undefined' && SITE_DATA.videos) ? SITE_DATA.videos : [];
     const CHANNEL = (typeof SITE_DATA !== 'undefined' && SITE_DATA.channel) ? SITE_DATA.channel : {};
 
+    const THUMB_CHAIN = ['maxresdefault.jpg','sddefault.jpg','hqdefault.jpg'];
+
     function thumb(v) {
       if (v.thumbnail) return v.thumbnail;
-      return `https://img.youtube.com/vi/${v.youtube_id}/maxresdefault.jpg`;
+      return `https://img.youtube.com/vi/${v.youtube_id}/${THUMB_CHAIN[0]}`;
+    }
+
+    function thumbFallback(img, ytId) {
+      if (img.naturalWidth > 120) return;
+      const cur = img.src.split('/').pop();
+      const idx = THUMB_CHAIN.indexOf(cur);
+      const next = THUMB_CHAIN[idx + 1];
+      if (next) {
+        img.src = `https://img.youtube.com/vi/${ytId}/${next}`;
+      }
     }
 
     function countSources(v) {
@@ -268,7 +280,7 @@
       return `
         <a href="/videos/#${slug}" class="vid-card sr" data-slug="${slug}">
           <div class="vid-card-img">
-            <img src="${thumb(v)}" alt="${v.title}" loading="lazy" onerror="this.style.display='none'">
+            <img src="${thumb(v)}" alt="${v.title}" loading="lazy" onload="thumbFallback(this,'${v.youtube_id}')" onerror="this.style.display='none'">
             <span class="dur">${v.duration}</span>
             <div class="play-overlay"><div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg></div></div>
           </div>

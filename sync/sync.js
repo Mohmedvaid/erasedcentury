@@ -174,7 +174,11 @@ async function fetchLatestVideos() {
     duration: formatDuration(item.contentDetails.duration),
     views: formatCount(item.statistics.viewCount),
     description: item.snippet.description.split("\n")[0].substring(0, 300), // First line, max 300 chars
-    thumbnail: "", // Leave empty to auto-generate from youtube_id
+    thumbnail:
+      item.snippet.thumbnails.maxres?.url ||
+      item.snippet.thumbnails.standard?.url ||
+      item.snippet.thumbnails.high?.url ||
+      "",
     sources: [] // Will be merged from existing data
   }));
 }

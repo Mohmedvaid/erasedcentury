@@ -1638,13 +1638,21 @@
       },
     ];
 
-    function thumb(id) { return `https://img.youtube.com/vi/${id}/maxresdefault.jpg` }
+    const THUMB_CHAIN = ['maxresdefault.jpg','sddefault.jpg','hqdefault.jpg'];
+    function thumb(id) { return `https://img.youtube.com/vi/${id}/${THUMB_CHAIN[0]}` }
+    function thumbFallback(img, ytId) {
+      if (img.naturalWidth > 120) return;
+      const cur = img.src.split('/').pop();
+      const idx = THUMB_CHAIN.indexOf(cur);
+      const next = THUMB_CHAIN[idx + 1];
+      if (next) img.src = `https://img.youtube.com/vi/${ytId}/${next}`;
+    }
 
     function renderFeatHero() {
       const v = VIDEOS[0];
       document.getElementById('featHero').innerHTML = `
         <div class="feat-hero-img">
-          <img src="${thumb(v.youtubeId)}" alt="${v.title}" loading="lazy" onerror="this.style.display='none'">
+          <img src="${thumb(v.youtubeId)}" alt="${v.title}" loading="lazy" onload="thumbFallback(this,'${v.youtubeId}')" onerror="this.style.display='none'">
           <div class="badge">Latest</div>
         </div>
         <div class="feat-hero-body">
@@ -1661,7 +1669,7 @@
       grid.innerHTML = VIDEOS.slice(1).map((v, i) => `
         <article class="vid-card sr sr-d${i + 1}" data-id="${v.id}">
           <div class="vid-card-img">
-            <img src="${thumb(v.youtubeId)}" alt="${v.title}" loading="lazy" onerror="this.style.display='none'">
+            <img src="${thumb(v.youtubeId)}" alt="${v.title}" loading="lazy" onload="thumbFallback(this,'${v.youtubeId}')" onerror="this.style.display='none'">
             <span class="dur">${v.duration}</span>
             <div class="play-overlay"><div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg></div></div>
           </div>

@@ -222,10 +222,21 @@
     let SITE = {};
     let VIDEOS = [];
 
+    const THUMB_CHAIN = ['maxresdefault.jpg','sddefault.jpg','hqdefault.jpg'];
+
     function thumb(v) {
-      // Use custom thumbnail if provided, otherwise auto-generate from YouTube ID
       if (v.thumbnail) return v.thumbnail;
-      return `https://img.youtube.com/vi/${v.youtube_id}/maxresdefault.jpg`;
+      return `https://img.youtube.com/vi/${v.youtube_id}/${THUMB_CHAIN[0]}`;
+    }
+
+    function thumbFallback(img, ytId) {
+      if (img.naturalWidth > 120) return;
+      const cur = img.src.split('/').pop();
+      const idx = THUMB_CHAIN.indexOf(cur);
+      const next = THUMB_CHAIN[idx + 1];
+      if (next) {
+        img.src = `https://img.youtube.com/vi/${ytId}/${next}`;
+      }
     }
 
     // ---- LOAD DATA & RENDER ----
@@ -315,7 +326,7 @@
       const slug = v.slug || v.youtube_id;
       fh.innerHTML = `
         <div class="feat-hero-img">
-          <img src="${thumb(v)}" alt="${v.title}" onerror="this.style.display='none'">
+          <img src="${thumb(v)}" alt="${v.title}" onload="thumbFallback(this,'${v.youtube_id}')" onerror="this.style.display='none'">
           <div class="badge">Latest</div>
         </div>
         <div class="feat-hero-body">
@@ -333,7 +344,7 @@
         return `
         <a href="/videos/#${slug}" class="vid-card sr sr-d${Math.min(i + 1, 6)}" data-id="${v.id}">
           <div class="vid-card-img">
-            <img src="${thumb(v)}" alt="${v.title}" loading="lazy" onerror="this.style.display='none'">
+            <img src="${thumb(v)}" alt="${v.title}" loading="lazy" onload="thumbFallback(this,'${v.youtube_id}')" onerror="this.style.display='none'">
             <span class="dur">${v.duration}</span>
             <div class="play-overlay"><div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg></div></div>
           </div>
