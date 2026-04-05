@@ -9,7 +9,17 @@
   <link rel="icon" type="image/png" href="../assets/images/logo-min-nbg.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2PPQ638ED"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-Q2PPQ638ED');
+  </script>
   <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
   <script>
     (function () {
@@ -19,18 +29,87 @@
   </script>
   <link rel="stylesheet" href="../styles.css">
   <style>
-    .video-page { padding: 8rem 0 6rem; }
-    .video-back { margin-bottom: 2rem; display: inline-block; }
-    .video-page h1 { font-family: 'Instrument Serif', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.2; letter-spacing: .02em; color: var(--white); margin-bottom: .75rem; }
-    .video-player-wrap { width: 100%; aspect-ratio: 16/9; background: var(--surface); margin-bottom: 2.5rem; overflow: hidden; }
-    .video-player-wrap iframe { width: 100%; height: 100%; border: none; }
-    .video-meta { font-family: 'Space Mono', monospace; font-size: .6rem; letter-spacing: .1em; color: var(--text-muted); display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-    .video-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-muted); }
-    .video-desc { font-size: 1rem; font-weight: 300; line-height: 1.8; color: var(--text-secondary); margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); white-space: pre-wrap; }
-    .video-sources { margin-bottom: 3rem; }
-    .more-investigations { margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border); }
-    .more-investigations .section-title { margin-bottom: 1.5rem; }
-    .vid-card { text-decoration: none; display: block; color: inherit; }
+    .video-page {
+      padding: 8rem 0 6rem;
+    }
+
+    .video-back {
+      margin-bottom: 2rem;
+      display: inline-block;
+    }
+
+    .video-page h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      line-height: 1.2;
+      letter-spacing: .02em;
+      color: var(--white);
+      margin-bottom: .75rem;
+    }
+
+    .video-player-wrap {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--surface);
+      margin-bottom: 2.5rem;
+      overflow: hidden;
+    }
+
+    .video-player-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-meta {
+      font-family: 'Space Mono', monospace;
+      font-size: .6rem;
+      letter-spacing: .1em;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .video-meta .dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .video-desc {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      white-space: pre-wrap;
+    }
+
+    .video-sources {
+      margin-bottom: 3rem;
+    }
+
+    .more-investigations {
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .more-investigations .section-title {
+      margin-bottom: 1.5rem;
+    }
+
+    .vid-card {
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
   </style>
 </head>
 
@@ -49,13 +128,20 @@
       </div>
       <div class="nav-actions">
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" />
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-            <line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" />
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
           </svg>
-          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
           </svg>
         </button>
@@ -299,7 +385,7 @@
     }
     function onRecaptchaLoad() {
       if (typeof grecaptcha === 'undefined' || !RC_KEY) return;
-      try { inlineWidgetId = grecaptcha.render('recaptchaInline', getRecaptchaOpts()); } catch (e) {}
+      try { inlineWidgetId = grecaptcha.render('recaptchaInline', getRecaptchaOpts()); } catch (e) { }
     }
     function reRenderRecaptcha(theme) {
       if (typeof grecaptcha === 'undefined' || !RC_KEY) return;
