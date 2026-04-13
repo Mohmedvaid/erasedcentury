@@ -253,6 +253,7 @@ async function main() {
 
   // Build final data object
   const data = {
+    ...(existing || {}),
     recaptcha_site_key:
       existing?.recaptcha_site_key || "YOUR_RECAPTCHA_SITE_KEY",
     beehiiv_magic_link:

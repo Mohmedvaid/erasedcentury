@@ -42,7 +42,36 @@ const SITE_DATA = {
       "views": "2.9K",
       "description": "In this documentary, we trace that process through the architecture and legal history of Europe’s built environment. We examine the Window Tax and how a levy designed as a proxy for wealth reshaped homes across Britain by encouraging owners to brick up their own windows. We look at the Assize of Bre",
       "thumbnail": "https://i.ytimg.com/vi/ybquMnDQ-mM/maxresdefault.jpg",
-      "sources": []
+      "sources": [
+        {
+          "text": "UK Parliament — Window Tax history and records",
+          "url": "https://www.parliament.uk/about/living-heritage/transformingsociety/towncountry/towns/tyne-and-wear-case-study/about-the-group/housing/window-tax/"
+        },
+        {
+          "text": "The National Archives (UK) — Window Tax documentation",
+          "url": "https://www.nationalarchives.gov.uk/education/resources/georgian-britain-age-modernity/window-tax/"
+        },
+        {
+          "text": "Wikipedia — Assize of Bread and Ale (with primary source citations)",
+          "url": "https://en.wikipedia.org/wiki/Assize_of_Bread_and_Ale"
+        },
+        {
+          "text": "UNESCO World Heritage — Ypres Cloth Hall / Belfries of Belgium",
+          "url": "https://en.wikipedia.org/wiki/Ypres_Cloth_Hall"
+        },
+        {
+          "text": "National Geographic — Notre-Dame archaeological discoveries",
+          "url": "https://www.nationalgeographic.com/history/article/notre-dame-restoration-surprising-treasures"
+        },
+        {
+          "text": "Smithsonian Magazine — Benjamin Franklin house bone discovery",
+          "url": "https://www.smithsonianmag.com/smart-news/englishman-discovers-secret-passageway-in-500-year-old-house-180979038/"
+        },
+        {
+          "text": "UK Parliament / Wikipedia — English Enclosure Movement (with primary source citations)",
+          "url": "https://en.wikipedia.org/wiki/Enclosure"
+        }
+      ]
     },
     {
       "id": 2,
@@ -54,7 +83,40 @@ const SITE_DATA = {
       "views": "2.9K",
       "description": "Most people are taught that orphanages existed to care for vulnerable children during times of poverty, family crisis, or social instability. That they offered food, shelter, education, and safety. And in official reports, public statements, and state records, that is often how these institutions we",
       "thumbnail": "https://i.ytimg.com/vi/SjKSq6X0HEU/maxresdefault.jpg",
-      "sources": []
+      "sources": [
+        {
+          "text": "Vermont Attorney General — St. Joseph’s Orphanage Task Force Report (December 2020)",
+          "url": "https://ago.vermont.gov/sites/ago/files/wp-content/uploads/2020/12/Task-Force-Report-Part-1.pdf"
+        },
+        {
+          "text": "Georgetown University Center for Youth Justice — Forgotten Children Initiative",
+          "url": "https://cyj.georgetown.edu/forgotten-children/"
+        },
+        {
+          "text": "University of South Florida — Dozier School for Boys Forensic Investigation (January 2016)",
+          "url": "https://cloud.usf.edu/usf-news-archive/News/article/5997"
+        },
+        {
+          "text": "U.S. Department of the Interior — Federal Indian Boarding School Initiative, Volume I (May 2022)",
+          "url": "https://www.doi.gov/sites/doi.gov/files/federal-indian-boarding-school-initiative-investigative-report-may-2022.pdf"
+        },
+        {
+          "text": "Project MUSE — “The History of Orphans and Orphanages in the United States”",
+          "url": "https://muse.jhu.edu/article/782165/summary"
+        },
+        {
+          "text": "FamilySearch — United States Records of Children’s Homes and Orphanages",
+          "url": "https://www.familysearch.org/en/wiki/United_States_Records_of_Childrens_Homes_and_Orphanages_-_International_Institute"
+        },
+        {
+          "text": "Montana Public Radio — “What’s the Story Behind Montana’s Old State Orphanage?” (September 2023)",
+          "url": "https://www.mtpr.org/montana-news/2023-09-27/whats-the-story-behind-montanas-old-state-orphanage"
+        },
+        {
+          "text": "BuzzFeed News / Christine Kenneally — “The Ghosts of St. Joseph’s Catholic Orphanage” (August 2018)",
+          "url": "https://www.buzzfeednews.com/article/christinekenneally/orphanage-death-catholic-abuse-nuns-st-josephs"
+        }
+      ]
     },
     {
       "id": 3,
@@ -66,7 +128,36 @@ const SITE_DATA = {
       "views": "2.8K",
       "description": "Industrial schools. Orphanages. Workhouses. Magdalene laundries. Across Ireland, the United States, England, and Australia, these institutions were presented as places of care—spaces built to shelter children with nowhere else to go. But behind their public-facing walls, a different system was opera",
       "thumbnail": "https://i.ytimg.com/vi/S4UeOlPus2U/maxresdefault.jpg",
-      "sources": []
+      "sources": [
+        {
+          "text": "Commission to Inquire into Child Abuse (Ryan Report)",
+          "url": "https://www.childabusecommission.ie/rpt/"
+        },
+        {
+          "text": "U.S. Bureau of Labor Statistics — History of Child Labor",
+          "url": "https://www.bls.gov/opub/mlr/2017/article/history-of-child-labor-in-the-united-states-part-1.htm"
+        },
+        {
+          "text": "Bon Secours Mother and Baby Home (Tuam)",
+          "url": "https://en.wikipedia.org/wiki/Bon_Secours_Mother_and_Baby_Home"
+        },
+        {
+          "text": "Religious orders allowed over 2,000 Irish children to be used in medical experiments",
+          "url": "https://www.irishcentral.com/news/religious-orders-allowed-over-2000-irish-children-to-be-used-in-medical-experiments"
+        },
+        {
+          "text": "Medical Experiments on Institutionalized Children",
+          "url": "https://www.findandconnect.gov.au/entity/medical-experiments/"
+        },
+        {
+          "text": "Magdalene Laundries in Ireland",
+          "url": "https://en.wikipedia.org/wiki/Magdalene_laundries_in_Ireland"
+        },
+        {
+          "text": "Workhouse Children — Historical Records",
+          "url": "https://spartacus-educational.com/IRworkhouse.htm"
+        }
+      ]
     },
     {
       "id": 4,
@@ -78,7 +169,32 @@ const SITE_DATA = {
       "views": "3.9K",
       "description": "Victorian buildings, buried streets, Edinburgh Vaults, Chicago street raising, Seattle Underground, Little Compton Street, and the Public Health Act of 1848 all collide in this documentary about why so many 19th-century buildings appear to have “basements” that were never meant to be underground—and",
       "thumbnail": "https://i.ytimg.com/vi/AXlY1AqHr6A/maxresdefault.jpg",
-      "sources": []
+      "sources": [
+        {
+          "text": "Edinburgh Vaults — Historical Documentation",
+          "url": "https://en.wikipedia.org/wiki/Edinburgh_Vaults"
+        },
+        {
+          "text": "Raising of Chicago",
+          "url": "https://en.wikipedia.org/wiki/Raising_of_Chicago"
+        },
+        {
+          "text": "Seattle Underground",
+          "url": "https://en.wikipedia.org/wiki/Seattle_Underground"
+        },
+        {
+          "text": "Little Compton Street — Atlas Obscura",
+          "url": "https://www.atlasobscura.com/places/the-buried-remains-of-little-compton-street-london-england"
+        },
+        {
+          "text": "Bristol Buried Victorian Street",
+          "url": "https://www.inkl.com/news/inside-victorian-street-buried-under-busy-city-with-road-gas-lamps-and-shops"
+        },
+        {
+          "text": "19th-century London — Public Health Act 1848 / Street Improvements",
+          "url": "https://en.wikipedia.org/wiki/19th-century_London"
+        }
+      ]
     },
     {
       "id": 5,
@@ -90,7 +206,36 @@ const SITE_DATA = {
       "views": "27.2K",
       "description": "Boston Day Police, night watchmen, slave patrols, the early NYPD, Tammany Hall, Thomas Byrnes, and America’s modern policing budget all collide in this documentary about who American policing was originally built to protect, who paid for it, and whether that structure ever truly changed.",
       "thumbnail": "https://i.ytimg.com/vi/HQoqHkwV8UQ/maxresdefault.jpg",
-      "sources": []
+      "sources": [
+        {
+          "text": "Boston Police Department — Official History",
+          "url": "https://police.boston.gov/history/"
+        },
+        {
+          "text": "TIME — “How the U.S. Got Its Police Force”",
+          "url": "https://time.com/4779112/police-history-origins/"
+        },
+        {
+          "text": "History of the New York City Police Department — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/History_of_the_New_York_City_Police_Department"
+        },
+        {
+          "text": "National Law Enforcement Officers Memorial Fund — “Slave Patrols: An Early Form of American Policing”",
+          "url": "https://nleomf.org/slave-patrols-an-early-form-of-american-policing/"
+        },
+        {
+          "text": "South Carolina Encyclopedia — “Slave Patrols”",
+          "url": "https://www.scencyclopedia.org/sce/entries/slave-patrols/"
+        },
+        {
+          "text": "TIME — “The Origins of Corruption in the New York City Police Department”",
+          "url": "https://time.com/4384963/nypd-scandal-history/"
+        },
+        {
+          "text": "FRED / U.S. Bureau of Economic Analysis — Government Current Expenditures: Public Order and Safety: Police",
+          "url": "https://fred.stlouisfed.org/series/G160091A027NBEA"
+        }
+      ]
     },
     {
       "id": 6,
@@ -102,7 +247,36 @@ const SITE_DATA = {
       "views": "7.8K",
       "description": "Camphene, industrial alcohol, Drake’s 1859 oil well, Standard Oil, Henry Ford’s fuel of the future, and National City Lines all collide in this documentary about how petroleum did not simply “win” in a neutral market. It was helped, protected, and embedded through taxes, monopoly, policy, and infras",
       "thumbnail": "https://i.ytimg.com/vi/mLEZ68kBfpk/maxresdefault.jpg",
-      "sources": []
+      "sources": [
+        {
+          "text": "Drake Well Museum & Park, Pennsylvania Historical & Museum Commission",
+          "url": "https://www.drakewell.org"
+        },
+        {
+          "text": "Bill Kovarik — History of Biofuels",
+          "url": "http://www.ethyl.environmentalhistory.org"
+        },
+        {
+          "text": "Bill Kovarik — Henry Ford, Charles Kettering and the Fuel of the Future",
+          "url": "https://environmentalhistory.org/people/henry-ford-charles-kettering-and-the-fuel-of-the-future/"
+        },
+        {
+          "text": "Encyclopaedia Britannica — Standard Oil",
+          "url": "https://www.britannica.com/money/Standard-Oil"
+        },
+        {
+          "text": "Yale University Energy History — Antitrust and Monopoly",
+          "url": "https://energyhistory.yale.edu/antitrust-and-monopoly/"
+        },
+        {
+          "text": "Bill of Rights Institute — Ida M. Tarbell’s Crusade against Standard Oil",
+          "url": "https://billofrightsinstitute.org/essays/ida-m-tarbells-crusade-against-standard-oil/"
+        },
+        {
+          "text": "United States v. National City Lines, Inc. (1949) / related appellate history",
+          "url": "https://law.justia.com/cases/federal/appellate-courts/F2/186/562/162881/"
+        }
+      ]
     },
     {
       "id": 7,
@@ -600,5 +774,6 @@ const SITE_DATA = {
         }
       ]
     }
-  ]
+  ],
+  "source_sync_boundary_date": "2026-04-12"
 };
