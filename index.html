@@ -19,38 +19,6 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Space+Mono:wght@400;700&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="./silktide-consent-manager.css">
-  <style>
-    #stcm-wrapper {
-      --fontFamily: 'DM Sans', sans-serif;
-      --primaryColor: #C4A370;
-      --backgroundColor: #141310;
-      --textColor: #F5F0E8;
-      --boxShadow: 0 4px 24px rgba(0, 0, 0, .4);
-      --iconColor: #C4A370;
-      --iconBackgroundColor: #141310;
-    }
-    [data-theme="light"] #stcm-wrapper {
-      --primaryColor: #8B6F3A;
-      --backgroundColor: #FFFFFF;
-      --textColor: #1A1815;
-      --iconColor: #8B6F3A;
-      --iconBackgroundColor: #FFFFFF;
-    }
-    #stcm-icon { display: none !important; }
-    #stcm-banner .stcm-button-secondary { display: none !important; }
-  </style>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('consent', 'default', {
-      'analytics_storage': 'denied',
-      'ad_storage': 'denied',
-      'ad_user_data': 'denied',
-      'ad_personalization': 'denied',
-      'wait_for_update': 500
-    });
-  </script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2PPQ638ED"></script>
   <script>
@@ -59,6 +27,7 @@
     gtag('js', new Date());
     gtag('config', 'G-Q2PPQ638ED');
   </script>
+  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
   <script>
     // Apply saved theme immediately to prevent flash
     (function () {
@@ -81,8 +50,7 @@
         <a href="/videos/" class="nav-link">Archive</a>
         <a href="#about" class="nav-link">About</a>
         <a href="#" class="nav-link" id="navContact">Contact</a>
-        <a href="#signup" class="nav-link">Newsletter</a>
-        <a href="#" target="_blank" rel="noopener" class="nav-cta" id="navSubscribe">YouTube</a>
+        <a href="#" target="_blank" rel="noopener" class="nav-cta" id="navSubscribe">Subscribe</a>
       </div>
       <div class="nav-actions">
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -124,12 +92,7 @@
               stroke-width="2">
               <polygon points="5,3 19,12 5,21" />
             </svg> Watch the Archive</a>
-          <a href="#signup" class="btn-secondary">Join Newsletter <svg
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12,5 19,12 12,19" />
-            </svg></a>
-          <a href="#" target="_blank" class="btn-secondary" id="heroSubscribe">YouTube <svg
+          <a href="#" target="_blank" class="btn-secondary" id="heroSubscribe">Subscribe on YouTube <svg
               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12,5 19,12 12,19" />
@@ -190,10 +153,14 @@
         <div class="section-label">Stay Informed</div>
         <h2>Get the research behind each video</h2>
         <p>Sources, extended research, and new investigations — delivered to your inbox. No spam, no fluff.</p>
-        <script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
-        <iframe src="https://subscribe-forms.beehiiv.com/96d031af-f53a-468c-b6c6-183ac50c01cf"
-          class="beehiiv-embed" data-test-id="beehiiv-embed" frameborder="0" scrolling="no"
-          style="width:100%;max-width:480px;margin:0 auto;background-color:transparent;border:none;display:block;"></iframe>
+        <div class="email-inline-recaptcha recaptcha-hidden" id="recaptchaWrap">
+          <div class="g-recaptcha" data-theme="dark" id="recaptchaInline"></div>
+        </div>
+        <div class="email-inline-form">
+          <input type="email" class="email-inline-input" id="inlineEmail" placeholder="Enter your email" required>
+          <button class="email-inline-submit" id="inlineSubmit" onclick="submitInline()">Join</button>
+        </div>
+        <div id="inlineMsg"></div>
         <p class="email-note">Free forever. Unsubscribe anytime. We respect your inbox.</p>
       </div>
     </div>
@@ -222,21 +189,10 @@
     let SITE = {};
     let VIDEOS = [];
 
-    const THUMB_CHAIN = ['maxresdefault.jpg','sddefault.jpg','hqdefault.jpg'];
-
     function thumb(v) {
+      // Use custom thumbnail if provided, otherwise auto-generate from YouTube ID
       if (v.thumbnail) return v.thumbnail;
-      return `https://img.youtube.com/vi/${v.youtube_id}/${THUMB_CHAIN[0]}`;
-    }
-
-    function thumbFallback(img, ytId) {
-      if (img.naturalWidth > 120) return;
-      const cur = img.src.split('/').pop();
-      const idx = THUMB_CHAIN.indexOf(cur);
-      const next = THUMB_CHAIN[idx + 1];
-      if (next) {
-        img.src = `https://img.youtube.com/vi/${ytId}/${next}`;
-      }
+      return `https://img.youtube.com/vi/${v.youtube_id}/maxresdefault.jpg`;
     }
 
     // ---- LOAD DATA & RENDER ----
@@ -326,7 +282,7 @@
       const slug = v.slug || v.youtube_id;
       fh.innerHTML = `
         <div class="feat-hero-img">
-          <img src="${thumb(v)}" alt="${v.title}" onload="thumbFallback(this,'${v.youtube_id}')" onerror="this.style.display='none'">
+          <img src="${thumb(v)}" alt="${v.title}" onerror="this.style.display='none'">
           <div class="badge">Latest</div>
         </div>
         <div class="feat-hero-body">
@@ -344,7 +300,7 @@
         return `
         <a href="/videos/#${slug}" class="vid-card sr sr-d${Math.min(i + 1, 6)}" data-id="${v.id}">
           <div class="vid-card-img">
-            <img src="${thumb(v)}" alt="${v.title}" loading="lazy" onload="thumbFallback(this,'${v.youtube_id}')" onerror="this.style.display='none'">
+            <img src="${thumb(v)}" alt="${v.title}" loading="lazy" onerror="this.style.display='none'">
             <span class="dur">${v.duration}</span>
             <div class="play-overlay"><div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg></div></div>
           </div>
@@ -428,7 +384,15 @@
         const next = current === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('theme', next);
+        reRenderRecaptcha(next);
       });
+
+      function reRenderRecaptcha(theme) {
+        if (typeof grecaptcha === 'undefined') return;
+        var inlineEl = document.getElementById('recaptchaInline');
+        inlineEl.innerHTML = '';
+        inlineWidgetId = grecaptcha.render('recaptchaInline', getRecaptchaOpts(theme));
+      }
     })();
 
     // ---- SCROLL REVEAL ----
@@ -437,44 +401,74 @@
       document.querySelectorAll('.sr:not(.vis)').forEach(el => obs.observe(el));
     }
 
+    // ==========================================
+    // EMAIL SIGNUP — BEEHIIV + reCAPTCHA (from data.js)
+    // ==========================================
+    const BEEHIIV_MAGIC = SITE_DATA.beehiiv_magic_link;
+    const RC_KEY = SITE_DATA.recaptcha_site_key;
+
+    // Explicit reCAPTCHA rendering (called by API onload callback)
+    let inlineWidgetId;
+    const recaptchaWrap = document.getElementById('recaptchaWrap');
+    function getRecaptchaOpts(theme) {
+      var rcTheme = theme || (document.documentElement.getAttribute('data-theme') || 'dark');
+      rcTheme = rcTheme === 'light' ? 'light' : 'dark';
+      return {
+        sitekey: RC_KEY,
+        theme: rcTheme,
+        callback: function () { submitInline(); }
+      };
+    }
+    function onRecaptchaLoad() {
+      inlineWidgetId = grecaptcha.render('recaptchaInline', getRecaptchaOpts());
+    }
+
+    function validateEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
+    function showMsg(elId, text, type) {
+      const el = document.getElementById(elId);
+      el.className = type === 'success' ? 'email-inline-msg success' : 'email-inline-msg error';
+      el.textContent = text;
+    }
+
+    function showRecaptcha() { recaptchaWrap && recaptchaWrap.classList.remove('recaptcha-hidden'); }
+    function hideRecaptcha() { recaptchaWrap && recaptchaWrap.classList.add('recaptcha-hidden'); }
+
+    async function submitToBeehiiv(email, msgElId, btnEl, widgetId) {
+      if (!validateEmail(email)) { showMsg(msgElId, 'Please enter a valid email address.', 'error'); return; }
+
+      const rc = grecaptcha.getResponse(widgetId);
+      if (!rc) {
+        showRecaptcha();
+        showMsg(msgElId, 'Please complete the captcha.', 'error');
+        return;
+      }
+
+      btnEl.disabled = true; btnEl.textContent = '...';
+      try {
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = `${BEEHIIV_MAGIC}?email=${encodeURIComponent(email)}`;
+        document.body.appendChild(iframe);
+        showMsg(msgElId, "You're in! Check your inbox to confirm.", 'success');
+        const inlineInput = document.getElementById('inlineEmail');
+        if (inlineInput) inlineInput.value = '';
+        btnEl.textContent = 'Done';
+        grecaptcha.reset(widgetId);
+        hideRecaptcha();
+      } catch (err) {
+        showMsg(msgElId, 'Something went wrong. Please try again.', 'error');
+        btnEl.disabled = false; btnEl.textContent = 'Join';
+        grecaptcha.reset(widgetId);
+      }
+    }
+
+    function submitInline() { submitToBeehiiv(document.getElementById('inlineEmail').value.trim(), 'inlineMsg', document.getElementById('inlineSubmit'), inlineWidgetId); }
+
+    document.getElementById('inlineEmail').addEventListener('keydown', e => { if (e.key === 'Enter') submitInline(); });
+
     // ---- BOOT ----
     init();
-  </script>
-  <script async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
-  <script src="./silktide-consent-manager.js"></script>
-  <script>
-    window.silktideConsentManager.init({
-      consentTypes: [
-        {
-          id: 'essential',
-          label: 'Essential',
-          description: 'These are necessary for the website to function and cannot be switched off.',
-          required: true,
-        },
-        {
-          id: 'analytics',
-          label: 'Analytics',
-          description: 'These help us understand how visitors interact with the website.',
-          defaultValue: false,
-          gtag: 'analytics_storage',
-        },
-        {
-          id: 'marketing',
-          label: 'Marketing',
-          description: 'These are used to deliver personalized advertisements.',
-          defaultValue: false,
-          gtag: ['ad_storage', 'ad_user_data', 'ad_personalization'],
-        },
-      ],
-      text: {
-        prompt: {
-          acceptAllButtonText: 'Accept',
-          preferencesButtonText: 'Manage',
-        },
-      },
-      prompt: { position: 'bottomRight' },
-      icon: { position: 'bottomLeft' },
-    });
   </script>
 </body>
 
