@@ -28,19 +28,6 @@
     gtag('config', 'G-Q2PPQ638ED');
   </script>
   <script>
-    // Label signups from this page in Beehiiv. Beehiiv's attribution script reads the page's UTM
-    // parameters, so add them here when the link didn't include any. ?v=video-slug becomes utm_content.
-    (function () {
-      try {
-        var u = new URL(location.href), q = u.searchParams, changed = false;
-        if (!q.get('utm_campaign')) { q.set('utm_campaign', 'books-waitlist'); changed = true; }
-        if (!q.get('utm_source')) { q.set('utm_source', 'website'); changed = true; }
-        if (q.get('v') && !q.get('utm_content')) { q.set('utm_content', q.get('v')); changed = true; }
-        if (changed) history.replaceState(null, '', u.pathname + '?' + q.toString() + u.hash);
-      } catch (e) { }
-    })();
-  </script>
-  <script>
     (function () {
       var t = localStorage.getItem('theme');
       if (t) document.documentElement.setAttribute('data-theme', t);
@@ -231,7 +218,7 @@
 
     /* Beehiiv's embed script resizes the iframe itself (up to the form's 480px width).
        Keep it inside the card on phones so the page never scrolls sideways. */
-    .wl-embed iframe.beehiiv-embed { width: 100% !important; max-width: 100% !important; }
+    .wl-embed iframe.beehiiv-embed { width: 100% !important; max-width: 100% !important; max-height: 420px !important; }
 
     .wl-wrap > *, .wl-card, .wl-pitch, .wl-hero > * { min-width: 0; }
 
@@ -402,13 +389,35 @@
               </div>
             </div>
             <p>Join the list and we'll email you Chapter 1 of Book 1. You'll also get every book in the series for <span data-price="founder"></span> instead of <span data-price="regular"></span>.</p>
-            <div class="wl-embed">
-              <script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
-              <iframe src="https://subscribe-forms.beehiiv.com/96d031af-f53a-468c-b6c6-183ac50c01cf"
-                class="beehiiv-embed" data-test-id="beehiiv-embed" frameborder="0" scrolling="no"
-                title="Email signup"
-                style="width:100%;max-width:480px;margin:0;background-color:transparent;border:none;display:block;"></iframe>
-            </div>
+            <div class="wl-embed" id="wlEmbed"></div>
+            <script>
+              // Beehiiv signup form ("EC Form"). Labels go on the form's own URL so the page URL stays clean:
+              // every signup here is tagged utm_campaign=books-waitlist, and ?v=video-slug becomes utm_content.
+              (function () {
+                var page = new URLSearchParams(location.search);
+                var q = new URLSearchParams({
+                  utm_source: page.get('utm_source') || 'website',
+                  utm_medium: page.get('utm_medium') || 'waitlist-page',
+                  utm_campaign: 'books-waitlist',
+                  referrer: location.origin + location.pathname
+                });
+                var video = page.get('v') || page.get('utm_content');
+                if (video) q.set('utm_content', video);
+                var f = document.createElement('iframe');
+                f.src = 'https://subscribe-forms.beehiiv.com/96d031af-f53a-468c-b6c6-183ac50c01cf?' + q.toString();
+                f.className = 'beehiiv-embed';
+                f.setAttribute('data-test-id', 'beehiiv-embed');
+                f.setAttribute('frameborder', '0');
+                f.setAttribute('scrolling', 'no');
+                f.title = 'Email signup';
+                f.style.cssText = 'width:100%;height:56px;margin:0;background-color:transparent;border:none;display:block;';
+                document.getElementById('wlEmbed').appendChild(f);
+                var js = document.createElement('script');
+                js.async = true;
+                js.src = 'https://subscribe-forms.beehiiv.com/embed.js';
+                document.body.appendChild(js);
+              })();
+            </script>
             <p class="wl-note">Free. Unsubscribe with one click. We only email you about the books and new research.</p>
           </div>
         </section>
@@ -507,7 +516,6 @@
     }));
 
   </script>
-  <script async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
 </body>
 
 </html>
