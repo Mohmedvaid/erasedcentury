@@ -27,6 +27,7 @@
     gtag('js', new Date());
     gtag('config', 'G-Q2PPQ638ED');
   </script>
+  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
   <script>
     (function () {
       var t = localStorage.getItem('theme');
@@ -214,17 +215,48 @@
       color: var(--text-secondary);
     }
 
-    .wl-embed { min-height: 52px; min-width: 0; max-width: 100%; overflow: hidden; }
+    .wl-form {
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+    }
 
-    /* Beehiiv's embed script resizes the iframe itself (up to the form's 480px width).
-       Keep it inside the card on phones so the page never scrolls sideways. */
-    .wl-embed iframe.beehiiv-embed { width: 100% !important; max-width: 100% !important; max-height: 420px !important; }
+    .wl-form .email-inline-input {
+      font-size: 1.05rem;
+      padding: 1rem 1.25rem;
+      min-width: 0;
+      flex: 1 1 16rem;
+    }
 
-    .wl-wrap > *, .wl-card, .wl-pitch, .wl-hero > * { min-width: 0; }
+    .wl-form .email-inline-submit {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: .02em;
+      text-transform: none;
+      padding: 1rem 2rem;
+      flex: 0 0 auto;
+    }
 
-    .wl-card p.wl-note {
-      font-size: .95rem;
-      color: var(--text-muted);
+    .wl-card .email-inline-recaptcha {
+      justify-content: flex-start;
+      margin: 0;
+    }
+
+    .wl-card .email-inline-msg {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0;
+      margin-top: 0;
+      justify-self: start;
+    }
+
+    .wl-done h3 {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-size: 2rem;
+      color: var(--white);
+      margin-bottom: .5rem;
     }
 
     /* Books */
@@ -313,6 +345,7 @@
       .wl-book { width: 9rem; }
       .wl-book .t { font-size: 1.1rem; }
       .wl-facts { grid-template-columns: 1fr; }
+      .wl-form .email-inline-submit { flex: 1 1 100%; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -389,36 +422,19 @@
               </div>
             </div>
             <p>Join the list and we'll email you Chapter 1 of Book 1. You'll also get every book in the series for <span data-price="founder"></span> instead of <span data-price="regular"></span>.</p>
-            <div class="wl-embed" id="wlEmbed"></div>
-            <script>
-              // Beehiiv signup form ("EC Form"). Labels go on the form's own URL so the page URL stays clean:
-              // every signup here is tagged utm_campaign=books-waitlist, and ?v=video-slug becomes utm_content.
-              (function () {
-                var page = new URLSearchParams(location.search);
-                var q = new URLSearchParams({
-                  utm_source: page.get('utm_source') || 'website',
-                  utm_medium: page.get('utm_medium') || 'waitlist-page',
-                  utm_campaign: 'books-waitlist',
-                  referrer: location.origin + location.pathname
-                });
-                var video = page.get('v') || page.get('utm_content');
-                if (video) q.set('utm_content', video);
-                var f = document.createElement('iframe');
-                f.src = 'https://subscribe-forms.beehiiv.com/96d031af-f53a-468c-b6c6-183ac50c01cf?' + q.toString();
-                f.className = 'beehiiv-embed';
-                f.setAttribute('data-test-id', 'beehiiv-embed');
-                f.setAttribute('frameborder', '0');
-                f.setAttribute('scrolling', 'no');
-                f.title = 'Email signup';
-                f.style.cssText = 'width:100%;height:56px;margin:0;background-color:transparent;border:none;display:block;';
-                document.getElementById('wlEmbed').appendChild(f);
-                var js = document.createElement('script');
-                js.async = true;
-                js.src = 'https://subscribe-forms.beehiiv.com/embed.js';
-                document.body.appendChild(js);
-              })();
-            </script>
-            <p class="wl-note">Free. Unsubscribe with one click. We only email you about the books and new research.</p>
+            <div class="email-inline-recaptcha recaptcha-hidden" id="recaptchaWrap">
+              <div class="g-recaptcha" id="recaptchaInline"></div>
+            </div>
+            <div class="wl-form">
+              <label for="inlineEmail" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Your email address</label>
+              <input type="email" class="email-inline-input" id="inlineEmail" placeholder="Your email address" autocomplete="email" required>
+              <button class="email-inline-submit" id="inlineSubmit" onclick="submitInline()">Send me Chapter 1</button>
+            </div>
+            <div id="inlineMsg"></div>
+          </div>
+          <div class="wl-done" id="wlDone" hidden>
+            <h3>You're on the list.</h3>
+            <p>Check your inbox to confirm your email. We'll send Chapter 1 as soon as it's ready, along with your early price.</p>
           </div>
         </section>
 
@@ -470,11 +486,17 @@
   <script>
     // ===== Book pricing shown on this page =====
     const PRICES = { founder: '$12', regular: '$24' };
+    // Tag for these signups in Beehiiv and Google Analytics
+    const WAITLIST_TAG = 'books-waitlist';
     // ===========================================
 
     const CHANNEL = (typeof SITE_DATA !== 'undefined' && SITE_DATA.channel) ? SITE_DATA.channel : {};
 
     document.querySelectorAll('[data-price]').forEach(el => { el.textContent = PRICES[el.getAttribute('data-price')] || ''; });
+
+    // Which video sent this visitor. Link each video as /waitlist/?v=video-slug
+    const params = new URLSearchParams(location.search);
+    const SOURCE_VIDEO = params.get('v') || params.get('utm_content') || '';
 
     // Nav + footer (same as the rest of the site)
     document.getElementById('navName').textContent = CHANNEL.name || 'Erased Century';
@@ -503,6 +525,7 @@
       const next = cur === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
+      reRenderRecaptcha(next);
     });
 
     window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 40));
@@ -515,6 +538,89 @@
       document.getElementById('navLinks').classList.remove('open');
     }));
 
+    // ==========================================
+    // EMAIL SIGNUP: Google reCAPTCHA here, then our signup relay (Cloudflare Worker in /worker)
+    // checks the captcha and adds the email to Beehiiv through its API.
+    // ==========================================
+    const SIGNUP_URL = 'https://erasedcentury-signup.REPLACE-ME.workers.dev';
+    const RC_KEY = (typeof SITE_DATA !== 'undefined' && SITE_DATA.recaptcha_site_key) ? SITE_DATA.recaptcha_site_key : '';
+    let inlineWidgetId;
+    const recaptchaWrap = document.getElementById('recaptchaWrap');
+
+    function getRecaptchaOpts(theme) {
+      let rcTheme = theme || (document.documentElement.getAttribute('data-theme') || 'dark');
+      rcTheme = rcTheme === 'light' ? 'light' : 'dark';
+      return { sitekey: RC_KEY, theme: rcTheme, callback: function () { submitInline(); } };
+    }
+    function onRecaptchaLoad() {
+      if (typeof grecaptcha === 'undefined' || !RC_KEY) return;
+      try { inlineWidgetId = grecaptcha.render('recaptchaInline', getRecaptchaOpts()); } catch (e) { }
+    }
+    function reRenderRecaptcha(theme) {
+      if (typeof grecaptcha === 'undefined' || !RC_KEY) return;
+      const el = document.getElementById('recaptchaInline');
+      if (!el) return;
+      el.innerHTML = '';
+      try { inlineWidgetId = grecaptcha.render('recaptchaInline', getRecaptchaOpts(theme)); } catch (e) { }
+    }
+    function validateEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
+    function showMsg(text, type) {
+      const el = document.getElementById('inlineMsg');
+      el.className = type === 'success' ? 'email-inline-msg success' : 'email-inline-msg error';
+      el.textContent = text;
+    }
+    function showRecaptcha() { recaptchaWrap && recaptchaWrap.classList.remove('recaptcha-hidden'); }
+    function hideRecaptcha() { recaptchaWrap && recaptchaWrap.classList.add('recaptcha-hidden'); }
+
+    let submitting = false;
+    async function submitInline() {
+      if (submitting) return;
+      const btnEl = document.getElementById('inlineSubmit');
+      const email = document.getElementById('inlineEmail').value.trim();
+      if (!validateEmail(email)) { showMsg("That email address doesn't look complete. Please check it and try again.", 'error'); return; }
+      if (typeof grecaptcha === 'undefined') { showMsg('The page is still loading. Please try again in a moment.', 'error'); return; }
+
+      const token = grecaptcha.getResponse(inlineWidgetId);
+      if (!token) {
+        showRecaptcha();
+        showMsg('Please tick the box to show you are not a robot.', 'error');
+        return;
+      }
+
+      submitting = true;
+      btnEl.disabled = true; btnEl.textContent = 'Saving...';
+      try {
+        const res = await fetch(SIGNUP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            token: token,
+            utm_source: params.get('utm_source') || 'website',
+            utm_medium: params.get('utm_medium') || 'waitlist-page',
+            utm_campaign: WAITLIST_TAG,
+            utm_content: SOURCE_VIDEO,
+            page: location.pathname
+          })
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+
+        if (typeof gtag === 'function') {
+          gtag('event', 'waitlist_signup', { list: WAITLIST_TAG, source_video: SOURCE_VIDEO || '(none)' });
+        }
+        hideRecaptcha();
+        document.getElementById('wlPitch').hidden = true;
+        document.getElementById('wlDone').hidden = false;
+      } catch (err) {
+        showMsg('We could not save your email. Please try again in a minute.', 'error');
+        btnEl.disabled = false; btnEl.textContent = 'Send me Chapter 1';
+        try { grecaptcha.reset(inlineWidgetId); } catch (e) { }
+      } finally {
+        submitting = false;
+      }
+    }
+
+    document.getElementById('inlineEmail').addEventListener('keydown', e => { if (e.key === 'Enter') submitInline(); });
   </script>
 </body>
 
