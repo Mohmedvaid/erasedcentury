@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Erased Century Files | Erased Century</title>
+  <meta name="description"
+    content="The Erased Century Files: a series of illustrated books that go deeper than the videos. Read the first chapter free.">
+  <meta property="og:title" content="The Erased Century Files">
+  <meta property="og:description" content="A series of illustrated books that go deeper than the videos. Read the first chapter free.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://erasedcentury.com/waitlist/">
+  <link rel="icon" type="image/png" href="../assets/images/logo-min-nbg.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2PPQ638ED"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-Q2PPQ638ED');
+  </script>
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* Book covers are physical objects, so they keep the same leather tones in both themes */
+    :root {
+      --cover-1: #2b2219;
+      --cover-2: #3a1f1c;
+      --cover-3: #1f2a24;
+      --cover-ink: #d9bd8c;
+    }
+
+    [hidden] { display: none !important; }
+
+    .wl-pitch { display: grid; gap: 1.25rem; }
+
+    .wl-page {
+      position: relative;
+      padding: 8.5rem 0 6rem;
+    }
+
+    .wl-wrap {
+      max-width: 880px;
+      margin: 0 auto;
+      display: grid;
+      gap: 4.5rem;
+    }
+
+    /* Readable labels on this page (the site default is very small) */
+    .wl-page .section-label {
+      font-size: .8rem;
+      letter-spacing: .18em;
+    }
+
+    /* Hero */
+    .wl-hero {
+      display: grid;
+      grid-template-columns: 15rem 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .wl-shelf {
+      position: relative;
+      width: 15rem;
+      height: 16rem;
+      max-width: 100%;
+    }
+
+    .wl-book {
+      position: absolute;
+      top: 0;
+      width: 10.5rem;
+      aspect-ratio: 3 / 4;
+      color: var(--cover-ink);
+      border-radius: 2px 6px 6px 2px;
+      border: 1px solid rgba(217, 189, 140, .25);
+      box-shadow: inset 7px 0 0 rgba(0, 0, 0, .3), 0 18px 36px rgba(0, 0, 0, .35);
+      padding: 1.1rem .9rem 1rem 1.35rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .wl-book::before {
+      content: '';
+      position: absolute;
+      inset: .45rem .45rem .45rem .9rem;
+      border: 1px solid rgba(217, 189, 140, .35);
+      pointer-events: none;
+    }
+
+    .wl-book .t {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.3rem;
+      line-height: 1.05;
+    }
+
+    .wl-book .v {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: 1rem;
+      border-top: 1px solid rgba(217, 189, 140, .45);
+      padding-top: .4rem;
+    }
+
+    .wl-b1 { background: var(--cover-1); left: 0; transform: rotate(-3deg); z-index: 3; }
+    .wl-b2 { background: var(--cover-2); left: 2.2rem; top: .3rem; transform: rotate(2deg); z-index: 2; }
+    .wl-b3 { background: var(--cover-3); left: 4.4rem; top: .7rem; transform: rotate(7deg); z-index: 1; }
+
+    .wl-hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .wl-hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-size: clamp(2.6rem, 6vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: .01em;
+      color: var(--white);
+      margin-bottom: 1rem;
+      text-wrap: balance;
+    }
+
+    .wl-lede {
+      font-size: 1.15rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 34rem;
+    }
+
+    /* Signup card */
+    .wl-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      position: relative;
+      padding: clamp(1.5rem, 5vw, 2.75rem);
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .wl-card::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: .6;
+    }
+
+    .wl-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: .5rem 1.5rem;
+    }
+
+    .wl-card h2 {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      line-height: 1.1;
+      color: var(--white);
+    }
+
+    .wl-price {
+      display: flex;
+      align-items: baseline;
+      gap: .6rem;
+      flex-wrap: wrap;
+    }
+
+    .wl-price .now {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.2rem;
+      line-height: 1;
+      color: var(--accent);
+    }
+
+    .wl-price .was {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+
+    .wl-price .per {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+    }
+
+    .wl-card p {
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .wl-embed { min-height: 52px; min-width: 0; max-width: 100%; overflow: hidden; }
+
+    /* Beehiiv's embed script resizes the iframe itself (up to the form's 480px width).
+       Keep it inside the card on phones so the page never scrolls sideways. */
+    .wl-embed iframe.beehiiv-embed { width: 100% !important; max-width: 100% !important; max-height: 420px !important; }
+
+    .wl-wrap > *, .wl-card, .wl-pitch, .wl-hero > * { min-width: 0; }
+
+    .wl-card p.wl-note {
+      font-size: .95rem;
+      color: var(--text-muted);
+    }
+
+    /* Books */
+    .wl-section h2 {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+
+    .wl-books {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .wl-books li {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.4rem 1.4rem 1.6rem;
+      display: grid;
+      align-content: start;
+      gap: .5rem;
+      min-width: 0;
+    }
+
+
+    .wl-books .when {
+      font-size: .9rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .wl-books h3 {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-size: 1.5rem;
+      line-height: 1.15;
+      color: var(--white);
+    }
+
+    .wl-books p {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+
+    .wl-facts {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem 2rem;
+    }
+
+    .wl-facts li {
+      position: relative;
+      padding-left: 1.4rem;
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--text-primary);
+    }
+
+    .wl-facts li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .62em;
+      width: .5rem;
+      height: .5rem;
+      background: var(--accent);
+      transform: rotate(45deg);
+    }
+
+    @media (max-width: 820px) {
+      .wl-books { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .wl-page { padding-top: 7rem; }
+      .wl-hero { grid-template-columns: 1fr; gap: 2.25rem; }
+      .wl-shelf { justify-self: center; width: 13rem; height: 14rem; }
+      .wl-book { width: 9rem; }
+      .wl-book .t { font-size: 1.1rem; }
+      .wl-facts { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sr { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <img src="../assets/images/logo-min-nbg.png" alt="Erased Century" class="nav-logo-img">
+        <span class="nav-wordmark" id="navName">Erased Century</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="/videos/" class="nav-link">Archive</a>
+        <a href="/#about" class="nav-link">About</a>
+        <a href="#" class="nav-link" id="navContact">Contact</a>
+        <a href="#" target="_blank" rel="noopener" class="nav-cta" id="navSubscribe">Subscribe</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </button>
+        <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wl-page">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+    </div>
+    <div class="container">
+      <div class="wl-wrap">
+
+        <header class="wl-hero">
+          <div class="wl-shelf" aria-hidden="true">
+            <div class="wl-book wl-b3"><div class="t"></div><div class="v">Book 3</div></div>
+            <div class="wl-book wl-b2"><div class="t"></div><div class="v">Book 2</div></div>
+            <div class="wl-book wl-b1"><div class="t">The Erased Century Files</div><div class="v">Book 1</div></div>
+          </div>
+          <div>
+            <h1>The Erased Century <em>Files</em></h1>
+            <p class="wl-lede">A series of illustrated books that go deeper than the videos. Each one tells the full story in written chapters, with the original photos, maps and records.</p>
+          </div>
+        </header>
+
+        <section class="wl-card" id="signup" aria-labelledby="signupTitle">
+          <div id="wlPitch" class="wl-pitch">
+            <div class="wl-card-head">
+              <h2 id="signupTitle">Read the first chapter free</h2>
+              <div class="wl-price">
+                <span class="now" data-price="founder"></span>
+                <span class="was" data-price="regular"></span>
+                <span class="per">per book</span>
+              </div>
+            </div>
+            <p>Join the list and we'll email you Chapter 1 of Book 1. You'll also get every book in the series for <span data-price="founder"></span> instead of <span data-price="regular"></span>.</p>
+            <div class="wl-embed" id="wlEmbed"></div>
+            <script>
+              // Beehiiv signup form ("EC Form"). Labels go on the form's own URL so the page URL stays clean:
+              // every signup here is tagged utm_campaign=books-waitlist, and ?v=video-slug becomes utm_content.
+              (function () {
+                var page = new URLSearchParams(location.search);
+                var q = new URLSearchParams({
+                  utm_source: page.get('utm_source') || 'website',
+                  utm_medium: page.get('utm_medium') || 'waitlist-page',
+                  utm_campaign: 'books-waitlist',
+                  referrer: location.origin + location.pathname
+                });
+                var video = page.get('v') || page.get('utm_content');
+                if (video) q.set('utm_content', video);
+                var f = document.createElement('iframe');
+                f.src = 'https://subscribe-forms.beehiiv.com/96d031af-f53a-468c-b6c6-183ac50c01cf?' + q.toString();
+                f.className = 'beehiiv-embed';
+                f.setAttribute('data-test-id', 'beehiiv-embed');
+                f.setAttribute('frameborder', '0');
+                f.setAttribute('scrolling', 'no');
+                f.title = 'Email signup';
+                f.style.cssText = 'width:100%;height:56px;margin:0;background-color:transparent;border:none;display:block;';
+                document.getElementById('wlEmbed').appendChild(f);
+                var js = document.createElement('script');
+                js.async = true;
+                js.src = 'https://subscribe-forms.beehiiv.com/embed.js';
+                document.body.appendChild(js);
+              })();
+            </script>
+            <p class="wl-note">Free. Unsubscribe with one click. We only email you about the books and new research.</p>
+          </div>
+        </section>
+
+        <section class="wl-section sr" aria-labelledby="booksTitle">
+          <h2 id="booksTitle">The books</h2>
+          <ol class="wl-books">
+            <li>
+              <span class="when">Book 1 · Coming first</span>
+              <h3>The Buildings That Came Down</h3>
+              <p>The grand halls and landmarks that were built, admired, then torn down, and what the records say about them.</p>
+            </li>
+            <li>
+              <span class="when">Book 2</span>
+              <h3>The Inventions That Vanished</h3>
+              <p>Machines that made the newspapers, earned patents, then disappeared from history.</p>
+            </li>
+            <li>
+              <span class="when">Book 3</span>
+              <h3>The Old Maps</h3>
+              <p>What 1800s maps show, how they differ from today's, and the stories behind the differences.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="wl-section sr" aria-labelledby="detailsTitle">
+          <h2 id="detailsTitle">The details</h2>
+          <ul class="wl-facts">
+            <li>Full written chapters, illustrated with original photos, maps and records</li>
+            <li>Every source listed, so you can look things up yourself</li>
+            <li>Large, easy-to-read text</li>
+            <li>Read on your phone, tablet or computer</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-left" id="footerCopy"></div>
+        <div class="footer-links" id="footerLinks"></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../data.js"></script>
+  <script>
+    // ===== Book pricing shown on this page =====
+    const PRICES = { founder: '$12', regular: '$24' };
+    // ===========================================
+
+    const CHANNEL = (typeof SITE_DATA !== 'undefined' && SITE_DATA.channel) ? SITE_DATA.channel : {};
+
+    document.querySelectorAll('[data-price]').forEach(el => { el.textContent = PRICES[el.getAttribute('data-price')] || ''; });
+
+    // Nav + footer (same as the rest of the site)
+    document.getElementById('navName').textContent = CHANNEL.name || 'Erased Century';
+    document.getElementById('navSubscribe').href = CHANNEL.subscribe_url || '#';
+    document.getElementById('navContact').href = `mailto:${CHANNEL.contact_email || 'contact@erasedcentury.com'}`;
+    (function renderFooter() {
+      const year = new Date().getFullYear();
+      document.getElementById('footerCopy').innerHTML = `&copy; ${CHANNEL.established || 2024}&ndash;${year} ${CHANNEL.company || 'Bold Core Media LLC'}`;
+      document.getElementById('footerLinks').innerHTML = `
+        <a href="${CHANNEL.youtube_url || '#'}" target="_blank">YouTube</a>
+        <a href="/videos/">Archive</a>
+        <a href="mailto:${CHANNEL.contact_email || 'contact@erasedcentury.com'}">Contact</a>`;
+    })();
+
+    // Scroll reveal
+    (function () {
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+      }, { threshold: .08, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.sr:not(.vis)').forEach(el => obs.observe(el));
+    })();
+
+    // Theme toggle
+    document.getElementById('themeToggle').addEventListener('click', function () {
+      const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 40));
+    document.getElementById('burger').addEventListener('click', function () {
+      this.classList.toggle('open');
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => {
+      document.getElementById('burger').classList.remove('open');
+      document.getElementById('navLinks').classList.remove('open');
+    }));
+
+  </script>
+</body>
+
+</html>
