@@ -23,8 +23,14 @@ const https = require("https");
 const fs = require("fs");
 const path = require("path");
 
-// Load .env
-require("dotenv").config({ path: path.join(__dirname, ".env") });
+// Load .env from the project root, with a fallback for legacy sync-local copies.
+const ROOT_ENV_PATH = path.resolve(__dirname, "..", ".env");
+const LOCAL_ENV_PATH = path.resolve(__dirname, ".env");
+const ENV_PATH = fs.existsSync(ROOT_ENV_PATH)
+  ? ROOT_ENV_PATH
+  : LOCAL_ENV_PATH;
+
+require("dotenv").config({ path: ENV_PATH });
 
 const API_KEY = process.env.YOUTUBE_API_KEY;
 const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID;
