@@ -27,7 +27,19 @@
     gtag('js', new Date());
     gtag('config', 'G-Q2PPQ638ED');
   </script>
-  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
+  <script>
+    // Label signups from this page in Beehiiv. Beehiiv's attribution script reads the page's UTM
+    // parameters, so add them here when the link didn't include any. ?v=video-slug becomes utm_content.
+    (function () {
+      try {
+        var u = new URL(location.href), q = u.searchParams, changed = false;
+        if (!q.get('utm_campaign')) { q.set('utm_campaign', 'books-waitlist'); changed = true; }
+        if (!q.get('utm_source')) { q.set('utm_source', 'website'); changed = true; }
+        if (q.get('v') && !q.get('utm_content')) { q.set('utm_content', q.get('v')); changed = true; }
+        if (changed) history.replaceState(null, '', u.pathname + '?' + q.toString() + u.hash);
+      } catch (e) { }
+    })();
+  </script>
   <script>
     (function () {
       var t = localStorage.getItem('theme');
@@ -215,48 +227,11 @@
       color: var(--text-secondary);
     }
 
-    .wl-form {
-      display: flex;
-      gap: .75rem;
-      flex-wrap: wrap;
-    }
+    .wl-embed { min-height: 52px; }
 
-    .wl-form .email-inline-input {
-      font-size: 1.05rem;
-      padding: 1rem 1.25rem;
-      min-width: 0;
-      flex: 1 1 16rem;
-    }
-
-    .wl-form .email-inline-submit {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      font-weight: 500;
-      letter-spacing: .02em;
-      text-transform: none;
-      padding: 1rem 2rem;
-      flex: 0 0 auto;
-    }
-
-    .wl-card .email-inline-recaptcha {
-      justify-content: flex-start;
-      margin: 0;
-    }
-
-    .wl-card .email-inline-msg {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      letter-spacing: 0;
-      margin-top: 0;
-      justify-self: start;
-    }
-
-    .wl-done h3 {
-      font-family: 'Instrument Serif', serif;
-      font-weight: 400;
-      font-size: 2rem;
-      color: var(--white);
-      margin-bottom: .5rem;
+    .wl-card p.wl-note {
+      font-size: .95rem;
+      color: var(--text-muted);
     }
 
     /* Books */
@@ -345,7 +320,6 @@
       .wl-book { width: 9rem; }
       .wl-book .t { font-size: 1.1rem; }
       .wl-facts { grid-template-columns: 1fr; }
-      .wl-form .email-inline-submit { flex: 1 1 100%; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -422,19 +396,14 @@
               </div>
             </div>
             <p>Join the list and we'll email you Chapter 1 of Book 1. You'll also get every book in the series for <span data-price="founder"></span> instead of <span data-price="regular"></span>.</p>
-            <div class="email-inline-recaptcha recaptcha-hidden" id="recaptchaWrap">
-              <div class="g-recaptcha" id="recaptchaInline"></div>
+            <div class="wl-embed">
+              <script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
+              <iframe src="https://subscribe-forms.beehiiv.com/96d031af-f53a-468c-b6c6-183ac50c01cf"
+                class="beehiiv-embed" data-test-id="beehiiv-embed" frameborder="0" scrolling="no"
+                title="Email signup"
+                style="width:100%;max-width:480px;margin:0;background-color:transparent;border:none;display:block;"></iframe>
             </div>
-            <div class="wl-form">
-              <label for="inlineEmail" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Your email address</label>
-              <input type="email" class="email-inline-input" id="inlineEmail" placeholder="Your email address" autocomplete="email" required>
-              <button class="email-inline-submit" id="inlineSubmit" onclick="submitInline()">Send me Chapter 1</button>
-            </div>
-            <div id="inlineMsg"></div>
-          </div>
-          <div class="wl-done" id="wlDone" hidden>
-            <h3>You're on the list.</h3>
-            <p>Check your inbox to confirm your email. We'll send Chapter 1 as soon as it's ready, along with your early price.</p>
+            <p class="wl-note">Free. Unsubscribe with one click. We only email you about the books and new research.</p>
           </div>
         </section>
 
@@ -486,17 +455,11 @@
   <script>
     // ===== Book pricing shown on this page =====
     const PRICES = { founder: '$12', regular: '$24' };
-    // Tag for these signups in Beehiiv and Google Analytics
-    const WAITLIST_TAG = 'books-waitlist';
     // ===========================================
 
     const CHANNEL = (typeof SITE_DATA !== 'undefined' && SITE_DATA.channel) ? SITE_DATA.channel : {};
 
     document.querySelectorAll('[data-price]').forEach(el => { el.textContent = PRICES[el.getAttribute('data-price')] || ''; });
-
-    // Which video sent this visitor. Link each video as /waitlist/?v=video-slug
-    const params = new URLSearchParams(location.search);
-    const SOURCE_VIDEO = params.get('v') || params.get('utm_content') || '';
 
     // Nav + footer (same as the rest of the site)
     document.getElementById('navName').textContent = CHANNEL.name || 'Erased Century';
@@ -525,7 +488,6 @@
       const next = cur === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
-      reRenderRecaptcha(next);
     });
 
     window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 40));
@@ -538,82 +500,8 @@
       document.getElementById('navLinks').classList.remove('open');
     }));
 
-    // ==========================================
-    // EMAIL SIGNUP: BEEHIIV + reCAPTCHA (same list as the rest of the site, tagged)
-    // ==========================================
-    const BEEHIIV_MAGIC = (typeof SITE_DATA !== 'undefined' && SITE_DATA.beehiiv_magic_link) ? SITE_DATA.beehiiv_magic_link : '';
-    const RC_KEY = (typeof SITE_DATA !== 'undefined' && SITE_DATA.recaptcha_site_key) ? SITE_DATA.recaptcha_site_key : '';
-    let inlineWidgetId;
-    const recaptchaWrap = document.getElementById('recaptchaWrap');
-
-    function getRecaptchaOpts(theme) {
-      let rcTheme = theme || (document.documentElement.getAttribute('data-theme') || 'dark');
-      rcTheme = rcTheme === 'light' ? 'light' : 'dark';
-      return { sitekey: RC_KEY, theme: rcTheme, callback: function () { submitInline(); } };
-    }
-    function onRecaptchaLoad() {
-      if (typeof grecaptcha === 'undefined' || !RC_KEY) return;
-      try { inlineWidgetId = grecaptcha.render('recaptchaInline', getRecaptchaOpts()); } catch (e) { }
-    }
-    function reRenderRecaptcha(theme) {
-      if (typeof grecaptcha === 'undefined' || !RC_KEY) return;
-      const el = document.getElementById('recaptchaInline');
-      if (!el) return;
-      el.innerHTML = '';
-      try { inlineWidgetId = grecaptcha.render('recaptchaInline', getRecaptchaOpts(theme)); } catch (e) { }
-    }
-    function validateEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
-    function showMsg(text, type) {
-      const el = document.getElementById('inlineMsg');
-      el.className = type === 'success' ? 'email-inline-msg success' : 'email-inline-msg error';
-      el.textContent = text;
-    }
-    function showRecaptcha() { recaptchaWrap && recaptchaWrap.classList.remove('recaptcha-hidden'); }
-    function hideRecaptcha() { recaptchaWrap && recaptchaWrap.classList.add('recaptcha-hidden'); }
-
-    function submitInline() {
-      const btnEl = document.getElementById('inlineSubmit');
-      const email = document.getElementById('inlineEmail').value.trim();
-      if (!validateEmail(email)) { showMsg("That email address doesn't look complete. Please check it and try again.", 'error'); return; }
-      if (typeof grecaptcha === 'undefined') { showMsg('The page is still loading. Please try again in a moment.', 'error'); return; }
-
-      const rc = grecaptcha.getResponse(inlineWidgetId);
-      if (!rc) {
-        showRecaptcha();
-        showMsg('Please tick the box to show you are not a robot, then press the button again.', 'error');
-        return;
-      }
-
-      btnEl.disabled = true; btnEl.textContent = 'Saving...';
-      try {
-        const q = new URLSearchParams({
-          email: email,
-          utm_source: WAITLIST_TAG,
-          utm_medium: 'website',
-          utm_campaign: 'erased-century-files'
-        });
-        if (SOURCE_VIDEO) q.set('utm_content', SOURCE_VIDEO);
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = `${BEEHIIV_MAGIC}?${q.toString()}`;
-        document.body.appendChild(iframe);
-
-        if (typeof gtag === 'function') {
-          gtag('event', 'waitlist_signup', { list: WAITLIST_TAG, source_video: SOURCE_VIDEO || '(none)' });
-        }
-
-        hideRecaptcha();
-        document.getElementById('wlPitch').hidden = true;
-        document.getElementById('wlDone').hidden = false;
-      } catch (err) {
-        showMsg('We could not save your email. Check your internet connection and try again.', 'error');
-        btnEl.disabled = false; btnEl.textContent = 'Send me Chapter 1';
-        grecaptcha.reset(inlineWidgetId);
-      }
-    }
-
-    document.getElementById('inlineEmail').addEventListener('keydown', e => { if (e.key === 'Enter') submitInline(); });
   </script>
+  <script async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
 </body>
 
 </html>
