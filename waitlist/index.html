@@ -49,6 +49,7 @@
     .wl-pitch { display: grid; gap: 1.25rem; }
 
     .wl-page {
+      position: relative;
       padding: 8.5rem 0 6rem;
     }
 
@@ -121,6 +122,11 @@
     .wl-b2 { background: var(--cover-2); left: 2.2rem; top: .3rem; transform: rotate(2deg); z-index: 2; }
     .wl-b3 { background: var(--cover-3); left: 4.4rem; top: .7rem; transform: rotate(7deg); z-index: 1; }
 
+    .wl-hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
     .wl-hero h1 {
       font-family: 'Instrument Serif', serif;
       font-weight: 400;
@@ -143,10 +149,22 @@
     /* Signup card */
     .wl-card {
       background: var(--bg-elevated);
-      border: 1px solid var(--border-hover);
+      border: 1px solid var(--border);
+      position: relative;
       padding: clamp(1.5rem, 5vw, 2.75rem);
       display: grid;
       gap: 1.25rem;
+    }
+
+    .wl-card::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: .6;
     }
 
     .wl-card-head {
@@ -260,7 +278,6 @@
     .wl-books li {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-top: 4px solid var(--cover-1);
       padding: 1.4rem 1.4rem 1.6rem;
       display: grid;
       align-content: start;
@@ -268,8 +285,6 @@
       min-width: 0;
     }
 
-    .wl-books li:nth-child(2) { border-top-color: var(--cover-2); }
-    .wl-books li:nth-child(3) { border-top-color: var(--cover-3); }
 
     .wl-books .when {
       font-size: .9rem;
@@ -377,6 +392,10 @@
   </nav>
 
   <main class="wl-page">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+    </div>
     <div class="container">
       <div class="wl-wrap">
 
@@ -387,7 +406,7 @@
             <div class="wl-book wl-b1"><div class="t">The Erased Century Files</div><div class="v">Book 1</div></div>
           </div>
           <div>
-            <h1>The Erased Century Files</h1>
+            <h1>The Erased Century <em>Files</em></h1>
             <p class="wl-lede">A series of illustrated books that go deeper than the videos. Each one tells the full story in written chapters, with the original photos, maps and records.</p>
           </div>
         </header>
