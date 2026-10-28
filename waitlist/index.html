@@ -227,7 +227,13 @@
       color: var(--text-secondary);
     }
 
-    .wl-embed { min-height: 52px; }
+    .wl-embed { min-height: 52px; min-width: 0; max-width: 100%; overflow: hidden; }
+
+    /* Beehiiv's embed script resizes the iframe itself (up to the form's 480px width).
+       Keep it inside the card on phones so the page never scrolls sideways. */
+    .wl-embed iframe.beehiiv-embed { width: 100% !important; max-width: 100% !important; }
+
+    .wl-wrap > *, .wl-card, .wl-pitch, .wl-hero > * { min-width: 0; }
 
     .wl-card p.wl-note {
       font-size: .95rem;
