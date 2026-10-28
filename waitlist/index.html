@@ -36,7 +36,12 @@
   </script>
   <link rel="stylesheet" href="../styles.css">
   <style>
-    /* Book covers are physical objects, so they keep the same leather tones in both themes */
+    /*
+      Waitlist page for The Erased Century Files.
+      Layout: one action above the fold (title, price, email), then the books,
+      what makes them different, real channel numbers, and a closing button.
+      Book covers are physical objects, so they keep the same leather tones in both themes.
+    */
     :root {
       --cover-1: #2b2219;
       --cover-2: #3a1f1c;
@@ -46,85 +51,21 @@
 
     [hidden] { display: none !important; }
 
-    .wl-pitch { display: grid; gap: 1.25rem; }
+    .wl-page { padding: 7.5rem 0 5rem; }
+    .wl-wrap { max-width: 1040px; margin: 0 auto; display: grid; gap: 5rem; }
 
-    .wl-page {
-      padding: 8.5rem 0 6rem;
-    }
-
-    .wl-wrap {
-      max-width: 880px;
-      margin: 0 auto;
-      display: grid;
-      gap: 4.5rem;
-    }
-
-    /* Readable labels on this page (the site default is very small) */
-    .wl-page .section-label {
-      font-size: .8rem;
-      letter-spacing: .18em;
-    }
-
-    /* Hero */
+    /* ---------- Hero: text + signup on the left, covers on the right ---------- */
     .wl-hero {
       display: grid;
-      grid-template-columns: 15rem 1fr;
-      gap: 3rem;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 3.5rem;
       align-items: center;
     }
-
-    .wl-shelf {
-      position: relative;
-      width: 15rem;
-      height: 16rem;
-      max-width: 100%;
-    }
-
-    .wl-book {
-      position: absolute;
-      top: 0;
-      width: 10.5rem;
-      aspect-ratio: 3 / 4;
-      color: var(--cover-ink);
-      border-radius: 2px 6px 6px 2px;
-      border: 1px solid rgba(217, 189, 140, .25);
-      box-shadow: inset 7px 0 0 rgba(0, 0, 0, .3), 0 18px 36px rgba(0, 0, 0, .35);
-      padding: 1.1rem .9rem 1rem 1.35rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .wl-book::before {
-      content: '';
-      position: absolute;
-      inset: .45rem .45rem .45rem .9rem;
-      border: 1px solid rgba(217, 189, 140, .35);
-      pointer-events: none;
-    }
-
-    .wl-book .t {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1.3rem;
-      line-height: 1.05;
-    }
-
-    .wl-book .v {
-      font-family: 'Instrument Serif', serif;
-      font-style: italic;
-      font-size: 1rem;
-      border-top: 1px solid rgba(217, 189, 140, .45);
-      padding-top: .4rem;
-    }
-
-    .wl-b1 { background: var(--cover-1); left: 0; transform: rotate(-3deg); z-index: 3; }
-    .wl-b2 { background: var(--cover-2); left: 2.2rem; top: .3rem; transform: rotate(2deg); z-index: 2; }
-    .wl-b3 { background: var(--cover-3); left: 4.4rem; top: .7rem; transform: rotate(7deg); z-index: 1; }
 
     .wl-hero h1 {
       font-family: 'Instrument Serif', serif;
       font-weight: 400;
-      font-size: clamp(2.6rem, 6vw, 4rem);
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
       line-height: 1.02;
       letter-spacing: .01em;
       color: var(--white);
@@ -137,200 +78,194 @@
       font-weight: 300;
       line-height: 1.7;
       color: var(--text-secondary);
-      max-width: 34rem;
+      max-width: 33rem;
+      margin-bottom: 2rem;
     }
 
-    /* Signup card */
-    .wl-card {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border-hover);
-      padding: clamp(1.5rem, 5vw, 2.75rem);
+    /* Offer block inside the hero */
+    .wl-offer {
+      border-top: 1px solid var(--border-hover);
+      padding-top: 1.75rem;
       display: grid;
-      gap: 1.25rem;
+      gap: 1rem;
     }
 
-    .wl-card-head {
+    .wl-offer-head {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
       flex-wrap: wrap;
-      gap: .5rem 1.5rem;
+      gap: .4rem 1.5rem;
     }
 
-    .wl-card h2 {
+    .wl-offer h2 {
       font-family: 'Instrument Serif', serif;
       font-weight: 400;
-      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-size: clamp(1.7rem, 3.6vw, 2.2rem);
       line-height: 1.1;
       color: var(--white);
     }
 
-    .wl-price {
-      display: flex;
-      align-items: baseline;
-      gap: .6rem;
-      flex-wrap: wrap;
-    }
+    .wl-price { display: flex; align-items: baseline; gap: .55rem; flex-wrap: wrap; }
+    .wl-price .now { font-family: 'Instrument Serif', serif; font-size: 2.1rem; line-height: 1; color: var(--accent); }
+    .wl-price .was { font-size: 1.05rem; color: var(--text-muted); text-decoration: line-through; }
+    .wl-price .per { font-size: 1.05rem; color: var(--text-secondary); }
 
-    .wl-price .now {
-      font-family: 'Instrument Serif', serif;
-      font-size: 2.2rem;
-      line-height: 1;
-      color: var(--accent);
-    }
+    .wl-offer p { font-size: 1.05rem; font-weight: 300; line-height: 1.7; color: var(--text-secondary); }
 
-    .wl-price .was {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      text-decoration: line-through;
-    }
-
-    .wl-price .per {
-      font-size: 1.05rem;
-      color: var(--text-secondary);
-    }
-
-    .wl-card p {
-      font-size: 1.05rem;
-      font-weight: 300;
-      line-height: 1.7;
-      color: var(--text-secondary);
-    }
-
-    .wl-form {
-      display: flex;
-      gap: .75rem;
-      flex-wrap: wrap;
-    }
-
+    .wl-form { display: flex; gap: .75rem; flex-wrap: wrap; }
     .wl-form .email-inline-input {
       font-size: 1.05rem;
-      padding: 1rem 1.25rem;
+      padding: 1.05rem 1.25rem;
       min-width: 0;
-      flex: 1 1 16rem;
+      flex: 1 1 15rem;
     }
-
-    .wl-form .email-inline-submit {
+    .wl-form .email-inline-submit,
+    .wl-btn {
       font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 500;
       letter-spacing: .02em;
       text-transform: none;
-      padding: 1rem 2rem;
+      padding: 1.05rem 2rem;
       flex: 0 0 auto;
     }
-
-    .wl-card .email-inline-recaptcha {
-      justify-content: flex-start;
-      margin: 0;
+    .wl-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .25s;
     }
+    .wl-btn:hover { background: var(--accent-bright); }
+    .wl-btn.ghost { background: transparent; color: var(--text-primary); border: 1px solid var(--border-hover); }
+    .wl-btn.ghost:hover { border-color: var(--accent); color: var(--accent); background: transparent; }
+    .wl-form .email-inline-submit:focus-visible,
+    .wl-btn:focus-visible,
+    .wl-form .email-inline-input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-    .wl-card .email-inline-msg {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      letter-spacing: 0;
-      margin-top: 0;
-      justify-self: start;
+    .wl-offer .email-inline-recaptcha { justify-content: flex-start; margin: 0; }
+    .wl-offer .email-inline-msg { font-family: 'DM Sans', sans-serif; font-size: 1rem; letter-spacing: 0; margin-top: 0; justify-self: start; }
+
+    .wl-trust { font-size: 1rem !important; color: var(--text-muted) !important; }
+    .wl-trust strong { color: var(--text-secondary); font-weight: 500; }
+
+    /* Success state */
+    .wl-done { display: grid; gap: 1rem; }
+    .wl-done h2 { color: var(--white); }
+    .wl-share { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+    /* Book stack */
+    .wl-shelf { position: relative; width: 17rem; height: 18.5rem; justify-self: center; max-width: 100%; }
+    .wl-book {
+      position: absolute;
+      top: 0;
+      width: 12rem;
+      aspect-ratio: 3 / 4;
+      color: var(--cover-ink);
+      border-radius: 2px 6px 6px 2px;
+      border: 1px solid rgba(217, 189, 140, .25);
+      box-shadow: inset 8px 0 0 rgba(0, 0, 0, .3), 0 20px 40px rgba(0, 0, 0, .35);
+      padding: 1.3rem 1rem 1.15rem 1.55rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-
-    .wl-done h3 {
+    .wl-book::before {
+      content: '';
+      position: absolute;
+      inset: .5rem .5rem .5rem 1rem;
+      border: 1px solid rgba(217, 189, 140, .35);
+      pointer-events: none;
+    }
+    .wl-book .t { font-family: 'Instrument Serif', serif; font-size: 1.5rem; line-height: 1.05; }
+    .wl-book .v {
       font-family: 'Instrument Serif', serif;
-      font-weight: 400;
-      font-size: 2rem;
-      color: var(--white);
-      margin-bottom: .5rem;
+      font-style: italic;
+      font-size: 1.05rem;
+      border-top: 1px solid rgba(217, 189, 140, .45);
+      padding-top: .45rem;
     }
+    .wl-b1 { background: var(--cover-1); left: 0; transform: rotate(-3deg); z-index: 3; }
+    .wl-b2 { background: var(--cover-2); left: 2.5rem; top: .35rem; transform: rotate(2deg); z-index: 2; }
+    .wl-b3 { background: var(--cover-3); left: 5rem; top: .8rem; transform: rotate(7deg); z-index: 1; }
 
-    /* Books */
+    /* ---------- Sections ---------- */
     .wl-section h2 {
       font-family: 'Instrument Serif', serif;
       font-weight: 400;
-      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      font-size: clamp(1.9rem, 3.6vw, 2.5rem);
       color: var(--white);
-      margin-bottom: 1.5rem;
+      margin-bottom: .5rem;
     }
+    .wl-section .sub { font-size: 1.05rem; font-weight: 300; color: var(--text-secondary); margin-bottom: 1.75rem; max-width: 40rem; }
 
-    .wl-books {
-      list-style: none;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-    }
-
+    .wl-books { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
     .wl-books li {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-top: 4px solid var(--cover-1);
-      padding: 1.4rem 1.4rem 1.6rem;
+      padding: 1.5rem 1.4rem 1.7rem;
       display: grid;
       align-content: start;
-      gap: .5rem;
-      min-width: 0;
+      gap: .55rem;
     }
-
     .wl-books li:nth-child(2) { border-top-color: var(--cover-2); }
     .wl-books li:nth-child(3) { border-top-color: var(--cover-3); }
+    .wl-books .when { font-size: .95rem; color: var(--accent); font-weight: 500; }
+    .wl-books h3 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 1.6rem; line-height: 1.12; color: var(--white); }
+    .wl-books p { font-size: 1rem; font-weight: 300; line-height: 1.65; color: var(--text-secondary); }
 
-    .wl-books .when {
-      font-size: .9rem;
-      color: var(--accent);
-      font-weight: 500;
-    }
+    .wl-why { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+    .wl-why div { border-left: 2px solid var(--accent); padding-left: 1.1rem; }
+    .wl-why h3 { font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 1.1rem; color: var(--text-primary); margin-bottom: .35rem; }
+    .wl-why p { font-size: 1rem; font-weight: 300; line-height: 1.65; color: var(--text-secondary); }
+    .wl-why a { color: var(--accent); }
 
-    .wl-books h3 {
-      font-family: 'Instrument Serif', serif;
-      font-weight: 400;
-      font-size: 1.5rem;
-      line-height: 1.15;
-      color: var(--white);
-    }
-
-    .wl-books p {
-      font-size: 1rem;
-      font-weight: 300;
-      line-height: 1.65;
-      color: var(--text-secondary);
-    }
-
-    .wl-facts {
-      list-style: none;
+    .wl-proof {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem 2rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid var(--border-hover);
+      border-bottom: 1px solid var(--border-hover);
+    }
+    .wl-proof > div { padding: 1.75rem 1rem; text-align: center; }
+    .wl-proof > div + div { border-left: 1px solid var(--border); }
+    .wl-proof .n { font-family: 'Instrument Serif', serif; font-size: clamp(2.2rem, 5vw, 3rem); line-height: 1; color: var(--white); font-variant-numeric: tabular-nums; }
+    .wl-proof .l { font-size: 1rem; color: var(--text-secondary); margin-top: .4rem; }
+
+    .wl-close { text-align: center; display: grid; justify-items: center; gap: 1rem; }
+    .wl-close h2 { margin-bottom: 0; }
+    .wl-close p { font-size: 1.05rem; font-weight: 300; color: var(--text-secondary); }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 900px) {
+      .wl-books, .wl-why { grid-template-columns: 1fr; }
+      .wl-why { gap: 1.5rem; }
     }
 
-    .wl-facts li {
-      position: relative;
-      padding-left: 1.4rem;
-      font-size: 1.05rem;
-      font-weight: 300;
-      line-height: 1.6;
-      color: var(--text-primary);
-    }
-
-    .wl-facts li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: .62em;
-      width: .5rem;
-      height: .5rem;
-      background: var(--accent);
-      transform: rotate(45deg);
-    }
-
-    @media (max-width: 820px) {
-      .wl-books { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 640px) {
-      .wl-page { padding-top: 7rem; }
-      .wl-hero { grid-template-columns: 1fr; gap: 2.25rem; }
-      .wl-shelf { justify-self: center; width: 13rem; height: 14rem; }
-      .wl-book { width: 9rem; }
-      .wl-book .t { font-size: 1.1rem; }
-      .wl-facts { grid-template-columns: 1fr; }
+    @media (max-width: 760px) {
+      .wl-page { padding-top: 5.75rem; }
+      .wl-wrap { gap: 4rem; }
+      .wl-hero { grid-template-columns: 1fr; gap: 1.1rem; }
+      .wl-shelf { order: -1; width: 7rem; height: 6.6rem; }
+      .wl-book { width: 4.7rem; padding: .6rem .5rem .55rem .8rem; box-shadow: inset 5px 0 0 rgba(0,0,0,.3), 0 10px 20px rgba(0,0,0,.3); }
+      .wl-book::before { inset: .3rem .3rem .3rem .6rem; }
+      .wl-book .t { font-size: .7rem; }
+      .wl-book .v { font-size: .75rem; padding-top: .25rem; }
+      .wl-b2 { left: 1.05rem; }
+      .wl-b3 { left: 2.1rem; }
+      .wl-hero h1 { margin-bottom: .75rem; }
+      .wl-lede { font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.1rem; }
+      .wl-hero h1 { font-size: 2.4rem; }
+      .wl-offer h2 { font-size: 1.6rem; }
+      .wl-price .now { font-size: 1.8rem; }
+      .wl-offer { padding-top: 1.25rem; gap: .85rem; }
       .wl-form .email-inline-submit { flex: 1 1 100%; }
+      .wl-proof > div { padding: 1.25rem .5rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -346,14 +281,8 @@
         <img src="../assets/images/logo-min-nbg.png" alt="Erased Century" class="nav-logo-img">
         <span class="nav-wordmark" id="navName">Erased Century</span>
       </a>
-      <div class="nav-links" id="navLinks">
-        <a href="/videos/" class="nav-link">Archive</a>
-        <a href="/#about" class="nav-link">About</a>
-        <a href="#" class="nav-link" id="navContact">Contact</a>
-        <a href="#" target="_blank" rel="noopener" class="nav-cta" id="navSubscribe">Subscribe</a>
-      </div>
       <div class="nav-actions">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <button class="theme-toggle" id="themeToggle" aria-label="Switch between light and dark">
           <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5" />
@@ -371,7 +300,6 @@
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
           </svg>
         </button>
-        <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
       </div>
     </div>
   </nav>
@@ -380,75 +308,111 @@
     <div class="container">
       <div class="wl-wrap">
 
+        <!-- HERO: one action above the fold -->
         <header class="wl-hero">
+          <div>
+            <h1>The Erased Century Files</h1>
+            <p class="wl-lede">A series of illustrated books that go deeper than the videos. Full written chapters, with the original photos, maps and records, and a source for every claim.</p>
+
+            <section class="wl-offer" id="signup" aria-labelledby="signupTitle">
+              <div id="wlPitch" class="wl-offer" style="border:0;padding:0">
+                <div class="wl-offer-head">
+                  <h2 id="signupTitle">Read the first chapter free</h2>
+                  <div class="wl-price">
+                    <span class="now" data-price="founder"></span>
+                    <span class="was" data-price="regular"></span>
+                    <span class="per">per book</span>
+                  </div>
+                </div>
+                <p>Get Chapter 1 of Book 1 by email, plus the <span data-price="founder"></span> list price on every book.</p>
+                <div class="email-inline-recaptcha recaptcha-hidden" id="recaptchaWrap">
+                  <div class="g-recaptcha" id="recaptchaInline"></div>
+                </div>
+                <div class="wl-form">
+                  <label for="inlineEmail" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Your email address</label>
+                  <input type="email" class="email-inline-input" id="inlineEmail" placeholder="Your email address" autocomplete="email" inputmode="email" required>
+                  <button class="email-inline-submit" id="inlineSubmit" onclick="submitInline()">Send me Chapter 1</button>
+                </div>
+                <div id="inlineMsg"></div>
+                <p class="wl-trust" id="wlTrust">Free. Unsubscribe with one click. We never share your email.</p>
+              </div>
+
+              <div class="wl-done" id="wlDone" hidden>
+                <h2>You're on the list.</h2>
+                <p>Check your inbox now and click the link to confirm your email. Then we'll send Chapter 1 as soon as it's ready, with your <span data-price="founder"></span> price.</p>
+                <p>Know someone who would enjoy these books? Send them this page.</p>
+                <div class="wl-share">
+                  <button class="wl-btn ghost" id="copyLink" type="button">Copy the link</button>
+                  <a class="wl-btn ghost" id="emailLink" href="#">Email it to a friend</a>
+                </div>
+              </div>
+            </section>
+          </div>
+
           <div class="wl-shelf" aria-hidden="true">
             <div class="wl-book wl-b3"><div class="t"></div><div class="v">Book 3</div></div>
             <div class="wl-book wl-b2"><div class="t"></div><div class="v">Book 2</div></div>
             <div class="wl-book wl-b1"><div class="t">The Erased Century Files</div><div class="v">Book 1</div></div>
           </div>
-          <div>
-            <div class="section-label">New book series</div>
-            <h1>The Erased Century Files</h1>
-            <p class="wl-lede">A series of illustrated books that go deeper than the videos. Each one tells the full story in written chapters, with the original photos, maps and records.</p>
-          </div>
         </header>
 
-        <section class="wl-card" id="signup" aria-labelledby="signupTitle">
-          <div id="wlPitch" class="wl-pitch">
-            <div class="wl-card-head">
-              <h2 id="signupTitle">Read the first chapter free</h2>
-              <div class="wl-price">
-                <span class="now" data-price="founder"></span>
-                <span class="was" data-price="regular"></span>
-                <span class="per">per book</span>
-              </div>
-            </div>
-            <p>Join the list and we'll email you Chapter 1 of Book 1. You'll also get every book in the series for <span data-price="founder"></span> instead of <span data-price="regular"></span>.</p>
-            <div class="email-inline-recaptcha recaptcha-hidden" id="recaptchaWrap">
-              <div class="g-recaptcha" id="recaptchaInline"></div>
-            </div>
-            <div class="wl-form">
-              <label for="inlineEmail" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Your email address</label>
-              <input type="email" class="email-inline-input" id="inlineEmail" placeholder="Your email address" autocomplete="email" required>
-              <button class="email-inline-submit" id="inlineSubmit" onclick="submitInline()">Send me Chapter 1</button>
-            </div>
-            <div id="inlineMsg"></div>
-          </div>
-          <div class="wl-done" id="wlDone" hidden>
-            <h3>You're on the list.</h3>
-            <p>Check your inbox to confirm your email. We'll send Chapter 1 as soon as it's ready, along with your early price.</p>
-          </div>
-        </section>
-
+        <!-- THE BOOKS -->
         <section class="wl-section sr" aria-labelledby="booksTitle">
           <h2 id="booksTitle">The books</h2>
+          <p class="sub">Each book takes one thread from the channel and follows it all the way through.</p>
           <ol class="wl-books">
             <li>
               <span class="when">Book 1 · Coming first</span>
-              <h3>The Buildings That Came Down</h3>
-              <p>The grand halls and landmarks that were built, admired, then torn down, and what the records say about them.</p>
+              <h3>The Buildings</h3>
+              <p>Bricked-up doors, basement windows that used to be front doors, and the fires that took whole city blocks.</p>
             </li>
             <li>
               <span class="when">Book 2</span>
-              <h3>The Inventions That Vanished</h3>
-              <p>Machines that made the newspapers, earned patents, then disappeared from history.</p>
+              <h3>The America Nobody Taught</h3>
+              <p>Where police, income tax and oil really came from, and the 323 days most history classes skip.</p>
             </li>
             <li>
               <span class="when">Book 3</span>
-              <h3>The Old Maps</h3>
-              <p>What 1800s maps show, how they differ from today's, and the stories behind the differences.</p>
+              <h3>The Edge of the Map</h3>
+              <p>Antarctica before 1820, an island that survived into the Google Maps era, and finds that never reached the textbooks.</p>
             </li>
           </ol>
         </section>
 
-        <section class="wl-section sr" aria-labelledby="detailsTitle">
-          <h2 id="detailsTitle">The details</h2>
-          <ul class="wl-facts">
-            <li>Full written chapters, illustrated with original photos, maps and records</li>
-            <li>Every source listed, so you can look things up yourself</li>
-            <li>Large, easy-to-read text</li>
-            <li>Read on your phone, tablet or computer</li>
-          </ul>
+        <!-- WHY A BOOK -->
+        <section class="wl-section sr" aria-labelledby="whyTitle">
+          <h2 id="whyTitle">Why a book?</h2>
+          <p class="sub">A video can only hold so much. The books hold the rest.</p>
+          <div class="wl-why">
+            <div>
+              <h3>The full story</h3>
+              <p>Written chapters that go further than any video can, with the details we had to cut.</p>
+            </div>
+            <div>
+              <h3>Every source listed</h3>
+              <p>Like every video in our <a href="/videos/">Archive</a>, each claim comes with where we found it, so you can check it yourself.</p>
+            </div>
+            <div>
+              <h3>Easy to read</h3>
+              <p>Large, clear text with the original photos and maps beside it. Read on your phone, tablet or computer.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- REAL CHANNEL NUMBERS (pulled from data.js) -->
+        <section class="wl-section sr" aria-label="About the Erased Century channel">
+          <div class="wl-proof">
+            <div><div class="n" id="statSubs"></div><div class="l">YouTube subscribers</div></div>
+            <div><div class="n" id="statViews"></div><div class="l">Views</div></div>
+            <div><div class="n" id="statDocs"></div><div class="l">Documentaries</div></div>
+          </div>
+        </section>
+
+        <!-- CLOSING CTA -->
+        <section class="wl-section wl-close sr" aria-labelledby="closeTitle">
+          <h2 id="closeTitle">Start with Chapter 1, free</h2>
+          <p>One email field. No payment. Unsubscribe anytime.</p>
+          <a class="wl-btn" href="#signup" id="closeCta">Send me Chapter 1</a>
         </section>
 
       </div>
@@ -473,17 +437,27 @@
     // ===========================================
 
     const CHANNEL = (typeof SITE_DATA !== 'undefined' && SITE_DATA.channel) ? SITE_DATA.channel : {};
+    const PAGE_URL = 'https://erasedcentury.com/waitlist/';
 
     document.querySelectorAll('[data-price]').forEach(el => { el.textContent = PRICES[el.getAttribute('data-price')] || ''; });
+
+    // Real channel numbers from data.js (updated by the sync script). Hide the strip if missing.
+    (function () {
+      const subs = CHANNEL.subscribers, views = CHANNEL.total_views, docs = CHANNEL.documentaries;
+      if (!subs || !views || !docs) { document.querySelector('.wl-proof').closest('section').hidden = true; return; }
+      document.getElementById('statSubs').textContent = subs;
+      document.getElementById('statViews').textContent = views;
+      document.getElementById('statDocs').textContent = docs;
+      document.getElementById('wlTrust').innerHTML =
+        `Free. Unsubscribe with one click. From the channel <strong>${subs} people</strong> already follow.`;
+    })();
 
     // Which video sent this visitor. Link each video as /waitlist/?v=video-slug
     const params = new URLSearchParams(location.search);
     const SOURCE_VIDEO = params.get('v') || params.get('utm_content') || '';
 
-    // Nav + footer (same as the rest of the site)
+    // Footer (same as the rest of the site)
     document.getElementById('navName').textContent = CHANNEL.name || 'Erased Century';
-    document.getElementById('navSubscribe').href = CHANNEL.subscribe_url || '#';
-    document.getElementById('navContact').href = `mailto:${CHANNEL.contact_email || 'contact@erasedcentury.com'}`;
     (function renderFooter() {
       const year = new Date().getFullYear();
       document.getElementById('footerCopy').innerHTML = `&copy; ${CHANNEL.established || 2024}&ndash;${year} ${CHANNEL.company || 'Bold Core Media LLC'}`;
@@ -509,16 +483,30 @@
       localStorage.setItem('theme', next);
       reRenderRecaptcha(next);
     });
-
     window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 40));
-    document.getElementById('burger').addEventListener('click', function () {
-      this.classList.toggle('open');
-      document.getElementById('navLinks').classList.toggle('open');
+
+    // Closing button: scroll up to the form and put the cursor in it
+    document.getElementById('closeCta').addEventListener('click', function (e) {
+      const input = document.getElementById('inlineEmail');
+      if (!input || document.getElementById('wlPitch').hidden) return;
+      e.preventDefault();
+      document.getElementById('signup').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => input.focus({ preventScroll: true }), 500);
     });
-    document.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => {
-      document.getElementById('burger').classList.remove('open');
-      document.getElementById('navLinks').classList.remove('open');
-    }));
+
+    // Share buttons on the thank-you state
+    document.getElementById('emailLink').href =
+      'mailto:?subject=' + encodeURIComponent('Thought you would like this') +
+      '&body=' + encodeURIComponent('Erased Century is putting out a book series. The first chapter is free: ' + PAGE_URL);
+    document.getElementById('copyLink').addEventListener('click', function () {
+      const btn = this;
+      const done = () => { btn.textContent = 'Link copied'; setTimeout(() => { btn.textContent = 'Copy the link'; }, 2500); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(PAGE_URL).then(done).catch(() => { prompt('Copy this link:', PAGE_URL); });
+      } else {
+        prompt('Copy this link:', PAGE_URL);
+      }
+    });
 
     // ==========================================
     // EMAIL SIGNUP: BEEHIIV + reCAPTCHA (same list as the rest of the site, tagged)
